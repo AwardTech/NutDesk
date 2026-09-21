@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Build (Release)
+        run: msbuild NutDesk.sln -restore -p:Configuration=Release -m -nologo -verbosity:minimal
+
+      - name: Short commit id
+        id: sha
+        shell: pwsh
+        run: echo "short=$("${{ github.sha }}".Substring(0, 7))" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: NutDesk-${{ steps.sha.outputs.short }}
+          path: src/NutDesk/bin/Release/
+          if-no-files-found: error

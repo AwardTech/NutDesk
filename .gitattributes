@@ -1,0 +1,28 @@
+# Normalise line endings in the repository; each checkout gets its platform's native endings.
+* text=auto
+
+# Source and project files: plain text, so diffs and merges work whatever the local line endings are.
+*.sln      text
+*.csproj   text
+*.props    text
+*.targets  text
+*.cs       text diff=csharp
+*.xaml     text
+*.resx     text
+*.xlf      text
+*.config   text
+*.settings text
+*.manifest text
+*.md       text
+*.yml      text
+*.py       text
+
+# Binary assets: never touch line endings, never try to diff.
+*.ico  binary
+*.png  binary
+*.bmp  binary
+*.jpg  binary
+*.gif  binary
+*.zip  binary
+*.exe  binary
+*.dll  binary

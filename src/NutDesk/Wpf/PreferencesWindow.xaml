@@ -1,0 +1,1294 @@
+﻿<Window x:Class="NutDesk.Wpf.PreferencesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="820" Height="620" MinWidth="640" MinHeight="440"
+        WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI Variable Text, Segoe UI"
+        FontSize="13"
+        Background="{DynamicResource WindowBrush}"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        <!-- Tooltips carry most of the help on this window, so they get the palette instead of the system's
+             light box, and a width that makes the long translated ones wrap. -->
+        <Style TargetType="ToolTip">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" CornerRadius="4" Padding="9,6" MaxWidth="380">
+                            <ContentPresenter>
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- A card: rounded, hairline border, and just enough shadow to lift it off the surface. -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="18,10,18,10" />
+            <Setter Property="Margin" Value="0,0,0,12" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="14" ShadowDepth="1.5" Direction="270"
+                                      Opacity="{DynamicResource ShadowOpacity}" Color="#000000" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SectionHeading" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="2,0,0,14" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style x:Key="CardNote" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,6,0,4" />
+        </Style>
+
+        <Style x:Key="ColumnHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <!-- One setting per row: the caption takes whatever width is left and wraps, because the Italian and
+             German captions are long and the control on the right must never be pushed off the card. -->
+        <Style x:Key="Row" TargetType="Grid">
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="MinHeight" Value="32" />
+            <!-- Transparent rather than null, so hovering the gap between caption and control still shows the
+                 row's tooltip. -->
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style x:Key="RowLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,0,16,0" />
+            <Style.Triggers>
+                <!-- A text block draws the same whether enabled or not; the caption has to fade with its control
+                     or a disabled row looks editable. -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Suffix" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+        </Style>
+
+        <Style x:Key="FieldBox" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource WindowBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Padding" Value="9,0" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Chrome" CornerRadius="5" BorderThickness="1"
+                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center" Focusable="False"
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- A box whose DataContext is an InputField. Everything it needs comes from the field, so a use of it is
+             one line, and the verdict shows while the user types: a red wash and border plus the accepted range
+             inside the box, instead of the WinForms dialog's red background that only appeared once focus
+             tried to leave. -->
+        <Style x:Key="ValidatedBox" TargetType="TextBox" BasedOn="{StaticResource FieldBox}">
+            <Setter Property="Text" Value="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+            <Setter Property="ToolTip" Value="{Binding Tip}" />
+            <EventSetter Event="LostFocus" Handler="OnValidatedBoxLostFocus" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid SnapsToDevicePixels="True">
+                            <Border x:Name="Chrome" CornerRadius="5" BorderThickness="1"
+                                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" />
+                            <Border x:Name="ErrorWash" CornerRadius="5" Opacity="0" IsHitTestVisible="False"
+                                    Background="{DynamicResource DangerBrush}" />
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Focusable="False"
+                                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                                <TextBlock x:Name="Hint" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                           FontSize="11" IsHitTestVisible="False" Visibility="Collapsed"
+                                           Foreground="{DynamicResource DangerBrush}" Text="{Binding RangeHint}" />
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                            <!-- After the focus trigger on purpose: a field in error stays red while it is edited. -->
+                            <DataTrigger Binding="{Binding HasError}" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+                                <Setter TargetName="ErrorWash" Property="Opacity" Value="0.12" />
+                            </DataTrigger>
+                            <!-- The range only explains a value that is out of range. A box flagged because its
+                                 minimum is not below its maximum is red too, but "0 - 999" beside a 300 would
+                                 suggest the wrong fix. -->
+                            <DataTrigger Binding="{Binding IsOutOfRange}" Value="True">
+                                <Setter TargetName="Hint" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SecretBox" TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource WindowBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Padding" Value="9,0" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="Chrome" CornerRadius="5" BorderThickness="1"
+                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center" Focusable="False"
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                            <!-- The NUT password is never disabled, but the SMTP one follows its authentication
+                                 switch, and a box that does not fade looks as if it still counted. -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboItem" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Padding" Value="9,6" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Chrome" Margin="4,1" CornerRadius="4" Background="Transparent"
+                                Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource PressedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- The stock combo draws its button with the system theme, which stays light on a dark palette. -->
+        <Style x:Key="Combo" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource WindowBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ComboItem}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="Toggle" Focusable="False" ClickMode="Press"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Chrome" CornerRadius="5" BorderThickness="1"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                                            <Path HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,11,0"
+                                                  Data="M 0,0 L 4,4 L 8,0" StrokeThickness="1.5"
+                                                  Stroke="{DynamicResource TextSecondaryBrush}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource HoverBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <ContentPresenter Margin="10,0,30,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
+
+                            <Popup x:Name="PART_Popup" Placement="Bottom" AllowsTransparency="True" Focusable="False"
+                                   PopupAnimation="Fade"
+                                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Border Margin="0,4,0,0" Padding="0,3" CornerRadius="6" BorderThickness="1"
+                                        Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardBorderBrush}"
+                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Toggle" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- The check boxes become switches spanning the row, caption on the left: the whole row is the hit
+             target, and the stock check box glyph is another piece of system theme that ignores the palette. -->
+        <Style x:Key="Switch" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid x:Name="Root" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,16,0"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Border x:Name="Track" Grid.Column="1" Width="40" Height="20" CornerRadius="10"
+                                    BorderThickness="1" VerticalAlignment="Center" Background="Transparent"
+                                    BorderBrush="{DynamicResource TextSecondaryBrush}" SnapsToDevicePixels="True">
+                                <Ellipse x:Name="Knob" Width="12" Height="12" Margin="3,0" HorizontalAlignment="Left"
+                                         VerticalAlignment="Center" Fill="{DynamicResource TextSecondaryBrush}" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="{DynamicResource AccentBrush}" />
+                                <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                                <Setter TargetName="Knob" Property="Fill" Value="{DynamicResource AccentTextBrush}" />
+                                <Setter TargetName="Knob" Property="HorizontalAlignment" Value="Right" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- A bare check box for the notification matrix. Twenty-two switches in two columns would read as a wall
+             of toggles; a grid of ticks reads as the table it is. Drawn here for the same reason as the switch:
+             the stock glyph ignores the palette. -->
+        <Style x:Key="Tick" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border x:Name="Box" Width="18" Height="18" CornerRadius="4" BorderThickness="1"
+                                Background="Transparent" BorderBrush="{DynamicResource TextSecondaryBrush}"
+                                SnapsToDevicePixels="True">
+                            <Path x:Name="Mark" Width="16" Height="16" Visibility="Hidden"
+                                  Data="M4,8.2 L6.8,11 L12,5.2" StrokeThickness="1.8"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                  Stroke="{DynamicResource AccentTextBrush}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Box" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Box" Property="Background" Value="{DynamicResource AccentBrush}" />
+                                <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                                <Setter TargetName="Mark" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Box" Property="Opacity" Value="0.45" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Fluent-ish command button: quiet by default, subtle wash on hover. -->
+        <Style x:Key="CommandButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="16,7" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+            <Setter Property="MinWidth" Value="96" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Chrome"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource PressedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                                <Setter Property="Cursor" Value="Arrow" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource CommandButton}">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Chrome"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.88" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Chrome" Property="Opacity" Value="0.75" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- The log file buttons were icon-only in the dialog and have no caption to translate; they stay icons,
+             drawn as paths so they follow the palette. -->
+        <Style x:Key="IconButton" TargetType="Button" BasedOn="{StaticResource CommandButton}">
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="Width" Value="34" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style x:Key="Glyph" TargetType="Path">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="StrokeThickness" Value="1.3" />
+            <Setter Property="StrokeLineJoin" Value="Round" />
+            <Setter Property="StrokeStartLineCap" Value="Round" />
+            <Setter Property="StrokeEndLineCap" Value="Round" />
+            <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Control}}" />
+        </Style>
+
+        <!-- The NumericUpDown's arrows, kept because the interval moves in tenths of a second. -->
+        <Style x:Key="StepButton" TargetType="RepeatButton">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="15" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border x:Name="Chrome" CornerRadius="3" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource PressedBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NavItem" TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Chrome" CornerRadius="6" Background="Transparent" Padding="14,9,10,9"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Border x:Name="Marker" Width="3" Height="16" CornerRadius="1.5" Margin="-12,0,0,0"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden"
+                                        Background="{DynamicResource AccentBrush}" />
+                                <ContentPresenter VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource PressedBrush}" />
+                                <Setter TargetName="Marker" Property="Visibility" Value="Visible" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NavCaption" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style x:Key="SectionScroller" TargetType="ScrollViewer">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="Focusable" Value="False" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Navigation rail, in the order the tabs always had. The two notification sections sit before
+                 Update, which is the one people visit least. -->
+            <DockPanel Grid.Column="0" Margin="12,20,8,12">
+                <TextBlock DockPanel.Dock="Top" Margin="14,0,0,16" FontSize="20" FontWeight="SemiBold"
+                           TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+
+                <!-- Each item names itself after the caption it shows: its content is an icon and a TextBlock,
+                     so without this a screen reader would announce seven unnamed list items. -->
+                <ListBox Background="Transparent" BorderThickness="0" Padding="0"
+                         ItemContainerStyle="{StaticResource NavItem}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         SelectedIndex="{Binding SelectedSection, Mode=TwoWay}">
+                    <ListBoxItem AutomationProperties.Name="{Binding Captions[Tab_Connexion]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M2,2.5 H14 V6.5 H2 Z M2,9.5 H14 V13.5 H2 Z M4.5,4.5 H5.5 M4.5,11.5 H5.5" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Captions[Tab_Connexion]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Captions[Tab_Calibrage]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M2,4 H14 M2,8 H14 M2,12 H14 M5,2.5 V5.5 M10.5,6.5 V9.5 M7,10.5 V13.5" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Captions[Tab_Calibrage]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Captions[Tab_Miscellanous]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M2.5,2.5 H6.5 V6.5 H2.5 Z M9.5,2.5 H13.5 V6.5 H9.5 Z M2.5,9.5 H6.5 V13.5 H2.5 Z M9.5,9.5 H13.5 V13.5 H9.5 Z" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Captions[Tab_Miscellanous]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Captions[Tab_Shutdown]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M8,1.5 V7.5 M4.6,3.8 A5.5,5.5 0 1 0 11.4,3.8" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Captions[Tab_Shutdown]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Strings[Pref_Section_Notifications]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M4,11.5 V7 A4,4 0 0 1 12,7 V11.5 L13.5,12.5 H2.5 Z M8,1.5 V3 M6.5,14.5 H9.5" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Strings[Pref_Section_Notifications]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Strings[Pref_Section_Email]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M1.5,3.5 H14.5 V12.5 H1.5 Z M1.5,3.5 L8,9 L14.5,3.5" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Strings[Pref_Section_Email]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem AutomationProperties.Name="{Binding Captions[Tab_Update]}">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Glyph}"
+                                  Data="M13.5,8 A5.5,5.5 0 1 1 11.9,4.1 M12.5,1.5 V4.5 H9.5" />
+                            <TextBlock Style="{StaticResource NavCaption}" Text="{Binding Captions[Tab_Update]}" />
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </DockPanel>
+
+            <!-- One scroller per section, so each keeps its own position and the long translations scroll
+                 instead of being clipped. -->
+            <Grid Grid.Column="1">
+
+                <!-- Connection -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsConnectionSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Captions[Tab_Connexion]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding ServerAddress.Tip}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Server_IP]}" />
+                                    <TextBox Grid.Column="1" Width="240" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding ServerAddress}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Port.Tip}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Port]}" />
+                                    <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding Port}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Tb_UPS_Name]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Name_UPS]}" />
+                                    <TextBox Grid.Column="1" Width="240" Style="{StaticResource FieldBox}"
+                                             Text="{Binding UpsName, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Polling.Tip}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Delay_Com]}" />
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBox Width="120" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding Polling}" />
+                                        <StackPanel Margin="4,0,0,0" VerticalAlignment="Center">
+                                            <RepeatButton Style="{StaticResource StepButton}" Command="{Binding PollingUpCommand}">
+                                                <Path Style="{StaticResource Glyph}" Width="8" Height="5"
+                                                      Data="M0.5,4.5 L4,1 L7.5,4.5" />
+                                            </RepeatButton>
+                                            <RepeatButton Style="{StaticResource StepButton}" Command="{Binding PollingDownCommand}">
+                                                <Path Style="{StaticResource Glyph}" Width="8" Height="5"
+                                                      Data="M0.5,0.5 L4,4 L7.5,0.5" />
+                                            </RepeatButton>
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource Suffix}" Text="{Binding Captions[pollingIntervalUnitLabel]}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[Cb_Reconnect]}"
+                                          ToolTip="{Binding Tips[Cb_Reconnect]}"
+                                          IsChecked="{Binding AutoReconnect}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CardNote}" Text="{Binding Captions[Label3]}" />
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Tb_Login_Nut]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Login_Nut]}" />
+                                    <TextBox Grid.Column="1" Width="240" Style="{StaticResource FieldBox}"
+                                             Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Tb_Pwd_Nut]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Pwd_Nut]}" />
+                                    <PasswordBox x:Name="PasswordInput" Grid.Column="1" Width="240"
+                                                 Style="{StaticResource SecretBox}" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Calibration. Each min/max pair is one row under the Min and Max headers, so a pair reads as the
+                     single range it is - and the save-time check marks the pair together. -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsCalibrationSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Captions[Tab_Calibrage]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Margin="0,6,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="1" Style="{StaticResource ColumnHeader}" Text="{Binding Captions[Lbl_Mini]}" />
+                                    <TextBlock Grid.Column="2" Style="{StaticResource ColumnHeader}" Text="{Binding Captions[Lbl_Maxi]}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_InputV]}" />
+                                    <TextBox Grid.Column="1" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding InVMin}" />
+                                    <TextBox Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding InVMax}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Cbx_Freq_Input]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_PowerF]}" />
+                                    <!-- A nominal value rather than either bound, so it spans both columns. -->
+                                    <ComboBox Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0" Style="{StaticResource Combo}"
+                                              ItemsSource="{Binding FreqInputItems}"
+                                              SelectedIndex="{Binding FreqInputIndex, Mode=TwoWay}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_InputF]}" />
+                                    <TextBox Grid.Column="1" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding InFMin}" />
+                                    <TextBox Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding InFMax}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_OutputV]}" />
+                                    <TextBox Grid.Column="1" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding OutVMin}" />
+                                    <TextBox Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding OutVMax}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="110" />
+                                        <ColumnDefinition Width="110" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_BattV]}" />
+                                    <TextBox Grid.Column="1" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding BattVMin}" />
+                                    <TextBox Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding BattVMax}" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Miscellaneous -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsMiscellaneousSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Captions[Tab_Miscellanous]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[CB_Systray]}"
+                                          ToolTip="{Binding Tips[CB_Systray]}"
+                                          IsChecked="{Binding MinimizeToTray}" />
+                                <!-- Indented under the option they depend on. -->
+                                <CheckBox Style="{StaticResource Switch}" Margin="22,6,0,6"
+                                          Content="{Binding Captions[CB_Start_Mini]}"
+                                          ToolTip="{Binding Tips[CB_Start_Mini]}"
+                                          IsEnabled="{Binding TrayOptionsEnabled}"
+                                          IsChecked="{Binding StartMinimized}" />
+                                <CheckBox Style="{StaticResource Switch}" Margin="22,6,0,6"
+                                          Content="{Binding Captions[CB_Close_Tray]}"
+                                          ToolTip="{Binding Tips[CB_Close_Tray]}"
+                                          IsEnabled="{Binding TrayOptionsEnabled}"
+                                          IsChecked="{Binding CloseToTray}" />
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[CB_Start_W_Win]}"
+                                          ToolTip="{Binding Tips[CB_Start_W_Win]}"
+                                          IsChecked="{Binding StartWithWindows}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[CB_Use_Logfile]}"
+                                          ToolTip="{Binding Tips[CB_Use_Logfile]}"
+                                          IsChecked="{Binding UseLogFile}" />
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Cbx_LogLevel]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_LevelLog]}"
+                                               ToolTip="{Binding Tips[Lbl_LevelLog]}" />
+                                    <ComboBox Grid.Column="1" Width="180" Style="{StaticResource Combo}"
+                                              ItemsSource="{Binding LogLevelItems}"
+                                              SelectedIndex="{Binding LogLevelIndex, Mode=TwoWay}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource CardNote}" Margin="0,0,16,0" VerticalAlignment="Center"
+                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                                               Text="{Binding LogFileLocation}" ToolTip="{Binding LogFileLocation}" />
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Style="{StaticResource IconButton}" Margin="0"
+                                                Command="{Binding ViewLogCommand}"
+                                                IsEnabled="{Binding LogControlsEnabled}"
+                                                ToolTip="{Binding Tips[Btn_ViewLog]}"
+                                                ToolTipService.ShowOnDisabled="True">
+                                            <Path Style="{StaticResource Glyph}"
+                                                  Data="M4,1.5 H10 L12.5,4 V14.5 H4 Z M6.2,7 H10.3 M6.2,9.5 H10.3 M6.2,12 H8.8" />
+                                        </Button>
+                                        <Button Style="{StaticResource IconButton}"
+                                                Command="{Binding DeleteLogCommand}"
+                                                IsEnabled="{Binding LogControlsEnabled}"
+                                                ToolTip="{Binding Tips[Btn_DeleteLog]}"
+                                                ToolTipService.ShowOnDisabled="True">
+                                            <Path Style="{StaticResource Glyph}"
+                                                  Data="M2.5,4 H13.5 M6.2,4 V2.2 H9.8 V4 M4.2,4 L5,14.2 H11 L11.8,4 M6.9,6.8 V11.6 M9.1,6.8 V11.6" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Shutdown -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsShutdownSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Captions[Tab_Shutdown]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding BattLimitLoad.Tip}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_BattLimit_Load]}" />
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBox Width="120" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding BattLimitLoad}" />
+                                        <TextBlock Style="{StaticResource Suffix}" Text="{Binding Captions[Lbl_Percent]}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding BattLimitTime.Tip}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_BattLimit_Time]}" />
+                                    <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding BattLimitTime}" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[Cb_ImmediateStop]}"
+                                          ToolTip="{Binding Tips[Cb_ImmediateStop]}"
+                                          IsChecked="{Binding ImmediateStop}" />
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Cbx_TypeStop]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_StopType]}" />
+                                    <ComboBox Grid.Column="1" Width="180" Style="{StaticResource Combo}"
+                                              ItemsSource="{Binding StopTypeItems}"
+                                              SelectedIndex="{Binding StopTypeIndex, Mode=TwoWay}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding DelayStop.Tip}"
+                                      IsEnabled="{Binding DelayStop.IsEnabled}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Delay_Stop]}" />
+                                    <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding DelayStop}" />
+                                </Grid>
+
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[Cb_ExtendTime]}"
+                                          ToolTip="{Binding Tips[Cb_ExtendTime]}"
+                                          IsChecked="{Binding ExtendTime}" />
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding GraceTime.Tip}"
+                                      IsEnabled="{Binding GraceTime.IsEnabled}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_GraceTime]}" />
+                                    <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                             DataContext="{Binding GraceTime}" />
+                                </Grid>
+
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[CB_Follow_FSD]}"
+                                          ToolTip="{Binding Tips[CB_Follow_FSD]}"
+                                          IsChecked="{Binding FollowFsd}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Notifications -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsNotificationsSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Strings[Pref_Section_Notifications]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Strings[Pref_Notif_WindowsEnabled]}"
+                                          ToolTip="{Binding Strings[Pref_Notif_WindowsEnabledTip]}"
+                                          IsChecked="{Binding ToastEnabled}" />
+                                <!-- Indented under the option it depends on, like the tray options. -->
+                                <CheckBox Style="{StaticResource Switch}" Margin="22,6,0,6"
+                                          Content="{Binding Strings[Pref_Notif_PersistCritical]}"
+                                          ToolTip="{Binding Strings[Pref_Notif_PersistCriticalTip]}"
+                                          ToolTipService.ShowOnDisabled="True"
+                                          IsEnabled="{Binding ToastEnabled}"
+                                          IsChecked="{Binding ToastPersistCritical}" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Which events reach which channel, laid out like the calibration pairs: one row per
+                             event under the column headers. A channel that is switched off keeps its ticks but
+                             greys them, so turning it back on restores the choice instead of a blank column. -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Margin="0,6,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource ColumnHeader}" Margin="0"
+                                               Text="{Binding Strings[Pref_Notif_EventsHeader]}" />
+                                    <TextBlock Grid.Column="1" Style="{StaticResource ColumnHeader}"
+                                               Text="{Binding Strings[Pref_Notif_ColumnWindows]}" />
+                                    <TextBlock Grid.Column="2" Style="{StaticResource ColumnHeader}"
+                                               Text="{Binding Strings[Pref_Notif_ColumnEmail]}" />
+                                </Grid>
+
+                                <ItemsControl ItemsSource="{Binding NotificationEvents}" Focusable="False">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Style="{StaticResource Row}" Margin="0,1" MinHeight="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="90" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Label}" />
+                                                <CheckBox Grid.Column="1" Margin="10,0,0,0" Style="{StaticResource Tick}"
+                                                          AutomationProperties.Name="{Binding WindowsName}"
+                                                          IsChecked="{Binding Windows}"
+                                                          IsEnabled="{Binding DataContext.ToastEnabled, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                                <CheckBox Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource Tick}"
+                                                          AutomationProperties.Name="{Binding EmailName}"
+                                                          IsChecked="{Binding Email}"
+                                                          IsEnabled="{Binding DataContext.EmailEnabled, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <TextBlock Style="{StaticResource CardNote}" Text="{Binding Strings[Pref_Notif_EmailDisabledHint]}"
+                                           Visibility="{Binding IsEmailOff, Converter={StaticResource BoolToVis}}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Email -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsEmailSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Strings[Pref_Section_Email]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Strings[Pref_Email_Enabled]}"
+                                          IsChecked="{Binding EmailEnabled}" />
+                                <!-- Outside the part that greys out: messages left in the outbox are worth
+                                     knowing about even after email has been switched off. -->
+                                <TextBlock Style="{StaticResource CardNote}" Foreground="{DynamicResource WarningBrush}"
+                                           Text="{Binding PendingEmailNote}"
+                                           Visibility="{Binding HasPendingEmail, Converter={StaticResource BoolToVis}}" />
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel IsEnabled="{Binding EmailEnabled}">
+                            <!-- Account -->
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Style="{StaticResource Row}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_Server]}" />
+                                        <TextBox Grid.Column="1" Width="240" Style="{StaticResource FieldBox}"
+                                                 Text="{Binding SmtpHost, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Grid>
+
+                                    <Grid Style="{StaticResource Row}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_Port]}" />
+                                        <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding SmtpPort}" />
+                                    </Grid>
+
+                                    <Grid Style="{StaticResource Row}" ToolTip="{Binding Strings[Pref_Email_SecurityTip]}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_Security]}" />
+                                        <ComboBox Grid.Column="1" Width="180" Style="{StaticResource Combo}"
+                                                  ItemsSource="{Binding SmtpSecurityItems}"
+                                                  SelectedIndex="{Binding SmtpSecurityIndex, Mode=TwoWay}" />
+                                    </Grid>
+
+                                    <CheckBox Style="{StaticResource Switch}"
+                                              Content="{Binding Strings[Pref_Email_Auth]}"
+                                              IsChecked="{Binding SmtpAuth}" />
+
+                                    <Grid Style="{StaticResource Row}" IsEnabled="{Binding SmtpAuth}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_User]}" />
+                                        <TextBox Grid.Column="1" Width="240" Style="{StaticResource FieldBox}"
+                                                 Text="{Binding SmtpUser, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Grid>
+
+                                    <Grid Style="{StaticResource Row}" IsEnabled="{Binding SmtpAuth}"
+                                          ToolTip="{Binding Strings[Pref_Email_PasswordTip]}" ToolTipService.ShowOnDisabled="True">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_Password]}" />
+                                        <PasswordBox x:Name="SmtpPasswordInput" Grid.Column="1" Width="240"
+                                                     Style="{StaticResource SecretBox}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Addresses. An address box in error says why in its tooltip and in a line under
+                                 it: the reason is words, too long to sit inside the box the way a numeric range
+                                 does. -->
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Style="{StaticResource Row}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_From]}" />
+                                        <TextBox Grid.Column="1" Width="240" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding EmailFrom}" ToolTip="{Binding CurrentTip}" />
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource CardNote}" Margin="0,-4,0,4" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource DangerBrush}"
+                                               Text="{Binding Strings[Pref_Email_InvalidAddress]}"
+                                               Visibility="{Binding EmailFrom.IsOutOfRange, Converter={StaticResource BoolToVis}}" />
+
+                                    <Grid Style="{StaticResource Row}" ToolTip="{Binding Strings[Pref_Email_ToTip]}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_To]}" />
+                                        <TextBox Grid.Column="1" Width="240" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding EmailTo}" ToolTip="{Binding CurrentTip}" />
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource CardNote}" Margin="0,-4,0,4" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource DangerBrush}"
+                                               Text="{Binding Strings[Pref_Email_InvalidAddress]}"
+                                               Visibility="{Binding EmailTo.IsOutOfRange, Converter={StaticResource BoolToVis}}" />
+
+                                    <Grid Style="{StaticResource Row}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_SubjectPrefix]}" />
+                                        <TextBox Grid.Column="1" Width="240" Style="{StaticResource FieldBox}"
+                                                 Text="{Binding SubjectPrefix, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Grid>
+
+                                    <Grid Style="{StaticResource Row}" ToolTip="{Binding Strings[Pref_Email_CooldownTip]}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Strings[Pref_Email_Cooldown]}" />
+                                        <TextBox Grid.Column="1" Width="120" Style="{StaticResource ValidatedBox}"
+                                                 DataContext="{Binding EmailCooldown}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Test. The outcome sits beside the button that produced it, in the colour of the
+                                 verdict; it is the server's own answer, so it is shown as given. -->
+                            <Border Style="{StaticResource Card}">
+                                <Grid Style="{StaticResource Row}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="0,0,16,0" VerticalAlignment="Center" TextWrapping="Wrap"
+                                               Text="{Binding TestEmailStatus}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TestEmailSucceeded}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding TestEmailFailed}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <Button Grid.Column="1" Style="{StaticResource CommandButton}" Margin="0"
+                                            VerticalAlignment="Center"
+                                            Content="{Binding Strings[Pref_Email_Test]}"
+                                            Command="{Binding SendTestEmailCommand}"
+                                            IsEnabled="{Binding CanSendTestEmail}" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Update -->
+                <ScrollViewer Style="{StaticResource SectionScroller}"
+                              Visibility="{Binding IsUpdateSection, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Margin="12,20,24,12">
+                        <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Captions[Tab_Update]}" />
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <CheckBox Style="{StaticResource Switch}"
+                                          Content="{Binding Captions[Cb_Update_At_Start]}"
+                                          ToolTip="{Binding Tips[Cb_Update_At_Start]}"
+                                          IsChecked="{Binding CheckAtStart}" />
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Cbx_Delay_Verif]}"
+                                      IsEnabled="{Binding UpdateDelayEnabled}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Delay_Verif]}" />
+                                    <ComboBox Grid.Column="1" Width="180" Style="{StaticResource Combo}"
+                                              ItemsSource="{Binding UpdateDelayItems}"
+                                              SelectedIndex="{Binding UpdateDelayIndex, Mode=TwoWay}" />
+                                </Grid>
+
+                                <Grid Style="{StaticResource Row}" ToolTip="{Binding Tips[Cbx_Branch_Update]}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource RowLabel}" Text="{Binding Captions[Lbl_Branch_Update]}" />
+                                    <ComboBox Grid.Column="1" Width="180" Style="{StaticResource Combo}"
+                                              ItemsSource="{Binding BranchItems}"
+                                              SelectedIndex="{Binding BranchIndex, Mode=TwoWay}" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!-- Footer. The dialog's order, OK / Apply / Cancel, with the accent on the one that saves and closes. -->
+        <Border Grid.Row="1" BorderThickness="0,1,0,0"
+                Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardBorderBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="16,12">
+                <Button Style="{StaticResource AccentButton}" Margin="0"
+                        Content="{Binding Captions[Btn_Ok]}" Command="{Binding OkCommand}" />
+                <Button Style="{StaticResource CommandButton}"
+                        Content="{Binding Captions[Btn_Apply]}" Command="{Binding ApplyCommand}"
+                        IsEnabled="{Binding ApplyEnabled}" />
+                <Button Style="{StaticResource CommandButton}"
+                        Content="{Binding Captions[Btn_Cancel]}" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

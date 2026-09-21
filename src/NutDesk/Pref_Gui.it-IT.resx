@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
+  <data name="Tab_Connexion.Text" xml:space="preserve">
+    <value>Connessione</value>
+  </data>
+  <data name="Lbl_Server_IP.Text" xml:space="preserve">
+    <value>Server NUT</value>
+  </data>
+  <data name="Lbl_Port.Text" xml:space="preserve">
+    <value>Porta NUT</value>
+  </data>
+  <data name="Lbl_Name_UPS.Text" xml:space="preserve">
+    <value>Nome UPS</value>
+  </data>
+  <data name="Lbl_Delay_Com.Text" xml:space="preserve">
+    <value>Intervallo di interrogazione</value>
+  </data>
+  <data name="pollingIntervalUnitLabel.Text" xml:space="preserve">
+    <value>Secondi</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Credenziali per il server NUT (lascia vuoto se non richieste)</value>
+  </data>
+  <data name="Lbl_Login_Nut.Text" xml:space="preserve">
+    <value>Utente</value>
+  </data>
+  <data name="Lbl_Pwd_Nut.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Cb_Reconnect.Text" xml:space="preserve">
+    <value>Ristabilisci la connessione</value>
+  </data>
+  <data name="Tab_Calibrage.Text" xml:space="preserve">
+    <value>Calibrazione</value>
+  </data>
+  <data name="Lbl_Mini.Text" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Lbl_Maxi.Text" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Lbl_InputV.Text" xml:space="preserve">
+    <value>Tensione ingresso</value>
+  </data>
+  <data name="Lbl_PowerF.Text" xml:space="preserve">
+    <value>Frequenza di rete</value>
+  </data>
+  <data name="Lbl_InputF.Text" xml:space="preserve">
+    <value>Frequenza ingresso</value>
+  </data>
+  <data name="Lbl_OutputV.Text" xml:space="preserve">
+    <value>Tensione uscita</value>
+  </data>
+  <data name="Lbl_LoadUPS.Text" xml:space="preserve">
+    <value>Carico UPS</value>
+  </data>
+  <data name="Lbl_BattV.Text" xml:space="preserve">
+    <value>Tensione batteria</value>
+  </data>
+  <data name="Tab_Miscellanous.Text" xml:space="preserve">
+    <value>Varie</value>
+  </data>
+  <data name="Lbl_LevelLog.Text" xml:space="preserve">
+    <value>Livello di log</value>
+  </data>
+  <data name="CB_Use_Logfile.Text" xml:space="preserve">
+    <value>Crea file di log</value>
+  </data>
+  <data name="CB_Start_W_Win.Text" xml:space="preserve">
+    <value>Avvia con Windows</value>
+  </data>
+  <data name="CB_Close_Tray.Text" xml:space="preserve">
+    <value>Chiudi nell'area di notifica</value>
+  </data>
+  <data name="CB_Start_Mini.Text" xml:space="preserve">
+    <value>Avvia ridotto a icona</value>
+  </data>
+  <data name="CB_Systray.Text" xml:space="preserve">
+    <value>Riduci nell'area di notifica</value>
+  </data>
+  <data name="Tab_Shutdown.Text" xml:space="preserve">
+    <value>Spegnimento</value>
+  </data>
+  <data name="CB_Follow_FSD.Text" xml:space="preserve">
+    <value>Spegni al segnale FSD di NUT</value>
+  </data>
+  <data name="Lbl_BattLimit_Load.Text" xml:space="preserve">
+    <value>Spegni se la batteria scende sotto</value>
+  </data>
+  <data name="Lbl_Percent.Text" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="Lbl_BattLimit_Time.Text" xml:space="preserve">
+    <value>Spegni se l'autonomia scende sotto (sec)</value>
+  </data>
+  <data name="Lbl_StopType.Text" xml:space="preserve">
+    <value>Tipo di arresto</value>
+  </data>
+  <data name="Lbl_Delay_Stop.Text" xml:space="preserve">
+    <value>Ritardo prima dello spegnimento (sec)</value>
+  </data>
+  <data name="Lbl_GraceTime.Text" xml:space="preserve">
+    <value>Tempo di grazia prima dello spegnimento (sec)</value>
+  </data>
+  <data name="Cb_ImmediateStop.Text" xml:space="preserve">
+    <value>Arresto immediato</value>
+  </data>
+  <data name="Cb_ExtendTime.Text" xml:space="preserve">
+    <value>Consenti di prolungare il tempo di spegnimento</value>
+  </data>
+  <data name="Tab_Update.Text" xml:space="preserve">
+    <value>Aggiorna</value>
+  </data>
+  <data name="Cb_Update_At_Start.Text" xml:space="preserve">
+    <value>Controlla automaticamente gli aggiornamenti</value>
+  </data>
+  <data name="Lbl_Delay_Verif.Text" xml:space="preserve">
+    <value>Intervallo tra le verifiche</value>
+  </data>
+  <data name="Lbl_Branch_Update.Text" xml:space="preserve">
+    <value>Canale stabile o di sviluppo</value>
+  </data>
+  <data name="Btn_Ok.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Btn_Apply.Text" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="Btn_Cancel.Text" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="Btn_DeleteLog.ToolTip" xml:space="preserve">
+    <value>Elimina il file di log.</value>
+  </data>
+  <data name="Btn_ViewLog.ToolTip" xml:space="preserve">
+    <value>Apri il file di log.</value>
+  </data>
+  <data name="CB_Close_Tray.ToolTip" xml:space="preserve">
+    <value>Riduci nell'area di notifica alla chiusura.</value>
+  </data>
+  <data name="CB_Follow_FSD.ToolTip" xml:space="preserve">
+    <value>Indica se eseguire l'arresto quando il server NUT segnala uno spegnimento forzato (FSD = Force ShutDown)</value>
+  </data>
+  <data name="CB_Start_Mini.ToolTip" xml:space="preserve">
+    <value>Avvia NutDesk ridotto a icona.</value>
+  </data>
+  <data name="CB_Start_W_Win.ToolTip" xml:space="preserve">
+    <value>Avvia NutDesk all'avvio di Windows.</value>
+  </data>
+  <data name="CB_Systray.ToolTip" xml:space="preserve">
+    <value>Riduci nella barra delle applicazioni o nell'area di notifica.</value>
+  </data>
+  <data name="CB_Use_Logfile.ToolTip" xml:space="preserve">
+    <value>Scrivi gli eventi di log su file.</value>
+  </data>
+  <data name="Cb_ExtendTime.ToolTip" xml:space="preserve">
+    <value>Concede tempo aggiuntivo durante la procedura di spegnimento.
+Nota:
+Questo tempo aggiuntivo potrebbe superare l'autonomia dell'UPS - USARE CON CAUTELA!!!</value>
+  </data>
+  <data name="Cb_ImmediateStop.ToolTip" xml:space="preserve">
+    <value>Avvia la procedura di spegnimento immediatamente o in modo ritardato.</value>
+  </data>
+  <data name="Cb_Reconnect.ToolTip" xml:space="preserve">
+    <value>Attiva la connessione / riconnessione automatica</value>
+  </data>
+  <data name="Cb_Update_At_Start.ToolTip" xml:space="preserve">
+    <value>Controlla la presenza di aggiornamenti un minuto dopo l'avvio, poi regolarmente con la frequenza indicata sotto finché NutDesk è in esecuzione.</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items" xml:space="preserve">
+    <value>Stabile</value>
+  </data>
+  <data name="Cbx_Branch_Update.Items1" xml:space="preserve">
+    <value>Sviluppo</value>
+  </data>
+  <data name="Cbx_Branch_Update.ToolTip" xml:space="preserve">
+    <value>Usa il ramo Stabile o Sviluppo durante la verifica.</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items" xml:space="preserve">
+    <value>Giornaliera</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items1" xml:space="preserve">
+    <value>Settimanale</value>
+  </data>
+  <data name="Cbx_Delay_Verif.Items2" xml:space="preserve">
+    <value>Mensile</value>
+  </data>
+  <data name="Cbx_Delay_Verif.ToolTip" xml:space="preserve">
+    <value>Frequenza di verifica.</value>
+  </data>
+  <data name="Cbx_Freq_Input.Items" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="Cbx_Freq_Input.Items1" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="Cbx_Freq_Input.ToolTip" xml:space="preserve">
+    <value>Imposta la frequenza di ingresso se non fornita dall'UPS.</value>
+  </data>
+  <data name="Cbx_LogLevel.Items" xml:space="preserve">
+    <value>Avviso</value>
+  </data>
+  <data name="Cbx_LogLevel.Items1" xml:space="preserve">
+    <value>Allarme</value>
+  </data>
+  <data name="Cbx_LogLevel.Items2" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="Cbx_LogLevel.Items3" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Cbx_LogLevel.ToolTip" xml:space="preserve">
+    <value>Livello di registrazione.</value>
+  </data>
+  <data name="Cbx_TypeStop.Items" xml:space="preserve">
+    <value>Arresto</value>
+  </data>
+  <data name="Cbx_TypeStop.Items1" xml:space="preserve">
+    <value>Sospensione</value>
+  </data>
+  <data name="Cbx_TypeStop.Items2" xml:space="preserve">
+    <value>Ibernazione</value>
+  </data>
+  <data name="Cbx_TypeStop.ToolTip" xml:space="preserve">
+    <value>Tipo di arresto al termine della procedura.</value>
+  </data>
+  <data name="Lbl_LevelLog.ToolTip" xml:space="preserve">
+    <value>Livello di dettaglio del file di log</value>
+  </data>
+  <data name="Tb_BattLimit_Load.ToolTip" xml:space="preserve">
+    <value>Limite inferiore del livello della batteria che avvia la procedura di spegnimento.
+Valore accettato: valore numerico da 0 a 100.</value>
+  </data>
+  <data name="Tb_BattLimit_Time.ToolTip" xml:space="preserve">
+    <value>Limite inferiore dell'autonomia residua che avvia la procedura di spegnimento.
+Valore accettato: valore numerico da 0 a 3600.</value>
+  </data>
+  <data name="Tb_BattV_Max.ToolTip" xml:space="preserve">
+    <value>Tensione massima della batteria.
+Valore accettato: valore numerico da 0 a 100.</value>
+  </data>
+  <data name="Tb_BattV_Min.ToolTip" xml:space="preserve">
+    <value>Tensione minima della batteria.
+Valore accettato: valore numerico da 0 a 100.</value>
+  </data>
+  <data name="Tb_Delay_Stop.ToolTip" xml:space="preserve">
+    <value>Ritardo della procedura di arresto, se ritardata.
+Valore accettato: valore numerico da 0 a 3600.</value>
+  </data>
+  <data name="Tb_GraceTime.ToolTip" xml:space="preserve">
+    <value>Limite del periodo di grazia aggiuntivo.
+Valore accettato: valore numerico da 0 a 3600.</value>
+  </data>
+  <data name="Tb_InF_Max.ToolTip" xml:space="preserve">
+    <value>Frequenza di ingresso massima.
+Valore accettato: valore numerico da 0 a 100.</value>
+  </data>
+  <data name="Tb_InF_Min.ToolTip" xml:space="preserve">
+    <value>Frequenza di ingresso minima.
+Valore accettato: valore numerico da 0 a 100.</value>
+  </data>
+  <data name="Tb_InV_Max.ToolTip" xml:space="preserve">
+    <value>Tensione di ingresso massima.
+Valore accettato: valore numerico da 0 a 999.</value>
+  </data>
+  <data name="Tb_InV_Min.ToolTip" xml:space="preserve">
+    <value>Tensione di ingresso minima.
+Valore accettato: valore numerico da 0 a 999.</value>
+  </data>
+  <data name="Tb_Login_Nut.ToolTip" xml:space="preserve">
+    <value>Identificativo di connessione al server NUT</value>
+  </data>
+  <data name="Tb_OutV_Max.ToolTip" xml:space="preserve">
+    <value>Tensione di uscita massima.
+Valore accettato: valore numerico da 0 a 999.</value>
+  </data>
+  <data name="Tb_OutV_Min.ToolTip" xml:space="preserve">
+    <value>Tensione di uscita minima.
+Valore accettato: valore numerico da 0 a 999.</value>
+  </data>
+  <data name="Tb_Port.ToolTip" xml:space="preserve">
+    <value>Numero di porta del server NUT (predefinito = 3493).
+Valore accettato: valore numerico da 1 a 65535.</value>
+  </data>
+  <data name="Tb_Pwd_Nut.ToolTip" xml:space="preserve">
+    <value>Password di accesso al server NUT</value>
+  </data>
+  <data name="Tb_Server_IP.ToolTip" xml:space="preserve">
+    <value>Indirizzo del server NUT.
+Valore accettato: indirizzo IPV4 / IPV6 / FQDN.</value>
+  </data>
+  <data name="Tb_UPS_Name.ToolTip" xml:space="preserve">
+    <value>Nome dell'UPS da monitorare.
+Valore accettato: nome dell'UPS configurato nel server NUT.</value>
+  </data>
+  <data name="pollingIntervalValue.ToolTip" xml:space="preserve">
+    <value>Con quale frequenza NutDesk aggiorna i dati dal server NUT.</value>
+  </data>
+</root>

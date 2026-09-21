@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App_Event_Str_01" xml:space="preserve">
+    <value>Applicazione chiusa il</value>
+  </data>
+  <data name="DetectedPreviousPrefsData" xml:space="preserve">
+    <value>Rilevate preferenze precedenti nel Registro di sistema.</value>
+  </data>
+  <data name="Frm_Main_Str_03" xml:space="preserve">
+    <value>Riconnessione in corso</value>
+  </data>
+  <data name="Frm_Main_Str_05" xml:space="preserve">
+    <value>Non connesso</value>
+  </data>
+  <data name="Frm_Main_Str_06" xml:space="preserve">
+    <value>Connesso</value>
+  </data>
+  <data name="Frm_Main_Str_07" xml:space="preserve">
+    <value>Rete presente</value>
+  </data>
+  <data name="Frm_Main_Str_08" xml:space="preserve">
+    <value>A batteria ({0}%)</value>
+  </data>
+  <data name="Frm_Main_Str_09" xml:space="preserve">
+    <value>Batteria scarica</value>
+  </data>
+  <data name="Frm_Main_Str_10" xml:space="preserve">
+    <value>Batteria OK</value>
+  </data>
+  <data name="Frm_Main_Str_11" xml:space="preserve">
+    <value>Nome UPS sconosciuto</value>
+  </data>
+  <data name="Frm_Main_Str_12" xml:space="preserve">
+    <value>Connessione persa con {0}:{1}</value>
+  </data>
+  <data name="Frm_Main_Str_13" xml:space="preserve">
+    <value>Credenziali errate (nome utente o password)</value>
+  </data>
+  <data name="Frm_Main_Str_14" xml:space="preserve">
+    <value>NutDesk riparte dopo la sospensione di Windows.</value>
+  </data>
+  <data name="Frm_Main_Str_15" xml:space="preserve">
+    <value>Windows va in sospensione. NutDesk si disconnetterà.</value>
+  </data>
+  <data name="Frm_Shutdown_Str_01" xml:space="preserve">
+    <value>Carica batteria : {0}
+Autonomia residua : {1}</value>
+  </data>
+  <data name="List_Var_Gui__SaveFileError_Text" xml:space="preserve">
+    <value>Errore durante il salvataggio dei dati dell'UPS su file: {0}</value>
+  </data>
+  <data name="List_Var_Gui__SaveFileSuccess" xml:space="preserve">
+    <value>Dati dell'UPS salvati su file: {0}</value>
+  </data>
+  <data name="List_Var_Gui__SaveFile_Caption" xml:space="preserve">
+    <value>Salva i dati dell'UPS su file</value>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Caption" xml:space="preserve">
+    <value>Errore negli appunti</value>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Text" xml:space="preserve">
+    <value>Errore durante la copia dei dati dell'UPS negli appunti: {0}</value>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextSuccess" xml:space="preserve">
+    <value>Dati dell'UPS copiati negli appunti.</value>
+  </data>
+  <data name="LogCheckingForUpdate" xml:space="preserve">
+    <value>Verifica aggiornamenti in corso...</value>
+  </data>
+  <data name="Log_Str_01" xml:space="preserve">
+    <value>Preferenze di NutDesk modificate</value>
+  </data>
+  <data name="Log_Str_02" xml:space="preserve">
+    <value>Connessione al server NUT {0}:{1} stabilita</value>
+  </data>
+  <data name="Log_Str_03" xml:space="preserve">
+    <value>Connessione al server NUT {0}:{1} non riuscita: {2}</value>
+  </data>
+  <data name="Log_Str_04" xml:space="preserve">
+    <value>Riconnessione automatica</value>
+  </data>
+  <data name="Log_Str_05" xml:space="preserve">
+    <value>Disconnesso dal server NUT</value>
+  </data>
+  <data name="Log_Str_08" xml:space="preserve">
+    <value>Condizioni raggiunte per avviare lo spegnimento</value>
+  </data>
+  <data name="Log_Str_09" xml:space="preserve">
+    <value>Spegnimento annullato</value>
+  </data>
+  <data name="Log_Str_10" xml:space="preserve">
+    <value>Nessun aggiornamento disponibile</value>
+  </data>
+  <data name="Log_Str_11" xml:space="preserve">
+    <value>Versione {0} disponibile</value>
+  </data>
+  <data name="Log_Str_12" xml:space="preserve">
+    <value>Spegnimento imposto dal server NUT</value>
+  </data>
+  <data name="Log_Str_ErrorDecrypting" xml:space="preserve">
+    <value>Errore nel caricamento delle impostazioni cifrate (nome utente/password)</value>
+  </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" xml:space="preserve">
+    <value>Nessuna vecchia preferenza rilevata nel sistema.</value>
+  </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Enabled_TooltipText" xml:space="preserve">
+    <value>Vecchie preferenze rilevate. Fai clic per avviare la procedura di importazione.</value>
+  </data>
+  <data name="UpgradePrefsDialog_BackupLocationTitle" xml:space="preserve">
+    <value>Salva la chiave di registro di WinNUT</value>
+  </data>
+  <data name="UpgradePrefsDialog_BackupProcedureCompleted" xml:space="preserve">
+    <value>Le vecchie preferenze sono state salvate in {0}</value>
+  </data>
+  <data name="UpgradePrefsDialog_Cancelled" xml:space="preserve">
+    <value>Procedura di aggiornamento annullata: verranno usate le impostazioni predefinite.</value>
+  </data>
+  <data name="UpgradePrefsDialog_DeleteProcedureComplete" xml:space="preserve">
+    <value>Le vecchie preferenze sono state rimosse dal Registro di sistema.</value>
+  </data>
+  <data name="UpgradePrefsDialog_ErrorEncountered" xml:space="preserve">
+    <value>Si è verificato un errore durante la procedura di aggiornamento:
+
+{0}
+
+Correggi l'errore oppure annulla la finestra per continuare con le impostazioni predefinite.</value>
+  </data>
+  <data name="UpgradePrefsDialog_ImportProcedureCompleted" xml:space="preserve">
+    <value>Le vecchie preferenze sono state importate.</value>
+  </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistCaption" xml:space="preserve">
+    <value>Nessuna preferenza rilevata</value>
+  </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistError" xml:space="preserve">
+    <value>Nessuna preferenza rilevata nel Registro di sistema. Impossibile continuare.</value>
+  </data>
+  <data name="UpgradePrefsDialog_UnmatchedPairs" xml:space="preserve">
+    <value>Sono state trovate {0} preferenze sconosciute. Consulta il log per i dettagli.</value>
+  </data>
+  <data name="VariableUnavailable" xml:space="preserve">
+    <value>Non disponibile</value>
+  </data>
+  <data name="Menu_Theme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="Theme_FollowWindows" xml:space="preserve">
+    <value>Come Windows</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Chiaro</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Scuro</value>
+  </data>
+  <data name="Frm_Main_Str_Connecting" xml:space="preserve">
+    <value>Connessione in corso...</value>
+  </data>
+  <data name="List_Var_Gui_GetVarsError" xml:space="preserve">
+    <value>Errore durante il recupero delle variabili dall'UPS:</value>
+  </data>
+  <data name="List_Var_Gui_GetVarsErrorCaption" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="FileFilter_TextFiles" xml:space="preserve">
+    <value>File di testo|*.txt|Tutti i file|*.*</value>
+  </data>
+  <data name="FileFilter_RegistryFiles" xml:space="preserve">
+    <value>File del Registro di sistema (*.reg)|*.reg|Tutti i file (*.*)|*.*</value>
+  </data>
+  <data name="Pref_Gui_SaveErrorCaption" xml:space="preserve">
+    <value>Errore durante il salvataggio</value>
+  </data>
+  <data name="Pref_Gui_SaveErrorMessage" xml:space="preserve">
+    <value>NutDesk non è riuscito a salvare le preferenze. I dettagli sono stati scritti nel log.</value>
+  </data>
+  <data name="Pref_Gui_RangeErrorCaption" xml:space="preserve">
+    <value>Intervallo di calibrazione non valido</value>
+  </data>
+  <data name="Pref_Gui_RangeErrorMessage" xml:space="preserve">
+    <value>Il valore minimo deve essere inferiore al valore massimo. Controlla i campi evidenziati nella scheda Calibrazione.</value>
+  </data>
+  <data name="Dashboard_CaptionDevice" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="CrashDialog_Caption" xml:space="preserve">
+    <value>Errore critico in NutDesk</value>
+  </data>
+  <data name="CrashDialog_Message" xml:space="preserve">
+    <value>NutDesk ha riscontrato un errore critico e verrà chiuso a breve.
+Puoi:
+- generare un rapporto di errore che conterrà la maggior parte dei parametri configurati (senza
+  informazioni riservate come i dati di connessione al server NUT), gli ultimi 50 eventi registrati
+  e il messaggio di errore mostrato qui sotto.
+  Queste informazioni verranno poi copiate negli appunti per semplificare la segnalazione.
+- semplicemente chiudere NutDesk senza generare un rapporto.</value>
+  </data>
+  <data name="CrashDialog_BtnClose" xml:space="preserve">
+    <value>Chiudi NutDesk</value>
+  </data>
+  <data name="CrashDialog_BtnGenerate" xml:space="preserve">
+    <value>Genera rapporto e chiudi NutDesk</value>
+  </data>
+  <data name="Menu_Log" xml:space="preserve">
+    <value>Registro eventi</value>
+  </data>
+  <data name="LogWindow_Title" xml:space="preserve">
+    <value>Registro eventi</value>
+  </data>
+  <data name="LogWindow_SearchPlaceholder" xml:space="preserve">
+    <value>Cerca negli eventi</value>
+  </data>
+  <data name="LogWindow_OnlyImportant" xml:space="preserve">
+    <value>Solo eventi importanti</value>
+  </data>
+  <data name="LogWindow_OnlyImportantTip" xml:space="preserve">
+    <value>Mostra solo gli eventi tradotti e rivolti all'utente: connessioni, cambi di alimentazione e guasti.</value>
+  </data>
+  <data name="LogWindow_AutoScroll" xml:space="preserve">
+    <value>Segui i nuovi eventi</value>
+  </data>
+  <data name="LogWindow_Copy" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="LogWindow_CopyTip" xml:space="preserve">
+    <value>Copia negli appunti gli eventi attualmente elencati.</value>
+  </data>
+  <data name="LogWindow_OpenFile" xml:space="preserve">
+    <value>Apri file di log</value>
+  </data>
+  <data name="LogWindow_OpenFileTip" xml:space="preserve">
+    <value>Apri la cartella che contiene il file di log di oggi.</value>
+  </data>
+  <data name="LogWindow_OpenFileDisabled" xml:space="preserve">
+    <value>La scrittura del log su file è disattivata nelle preferenze.</value>
+  </data>
+  <data name="LogWindow_ColumnTime" xml:space="preserve">
+    <value>Ora</value>
+  </data>
+  <data name="LogWindow_ColumnLevel" xml:space="preserve">
+    <value>Livello</value>
+  </data>
+  <data name="LogWindow_ColumnSource" xml:space="preserve">
+    <value>Origine</value>
+  </data>
+  <data name="LogWindow_ColumnMessage" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="LogWindow_LevelNotice" xml:space="preserve">
+    <value>Avviso</value>
+  </data>
+  <data name="LogWindow_LevelWarning" xml:space="preserve">
+    <value>Allarme</value>
+  </data>
+  <data name="LogWindow_LevelError" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="LogWindow_LevelDebug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="LogWindow_Empty" xml:space="preserve">
+    <value>Nessun evento corrisponde ai filtri impostati.</value>
+  </data>
+  <data name="LogWindow_Count" xml:space="preserve">
+    <value>{0} di {1} eventi</value>
+  </data>
+  <data name="Dashboard_MoreOptions" xml:space="preserve">
+    <value>Altre opzioni</value>
+  </data>
+  <data name="Notif_PowerLost_Title" xml:space="preserve">
+    <value>Mancanza di corrente</value>
+  </data>
+  <data name="Notif_PowerRestored_Title" xml:space="preserve">
+    <value>Corrente ripristinata</value>
+  </data>
+  <data name="Notif_LowBattery_Title" xml:space="preserve">
+    <value>Batteria scarica</value>
+  </data>
+  <data name="Notif_ShutdownStarted_Title" xml:space="preserve">
+    <value>Spegnimento in corso</value>
+  </data>
+  <data name="Notif_ShutdownCancelled_Title" xml:space="preserve">
+    <value>Spegnimento annullato</value>
+  </data>
+  <data name="Notif_ConnectionLost_Title" xml:space="preserve">
+    <value>Connessione al server NUT persa</value>
+  </data>
+  <data name="Notif_ConnectionRestored_Title" xml:space="preserve">
+    <value>Connessione ripristinata</value>
+  </data>
+  <data name="Notif_ReconnectAbandoned_Title" xml:space="preserve">
+    <value>Monitoraggio interrotto</value>
+  </data>
+  <data name="Notif_BatteryReplace_Title" xml:space="preserve">
+    <value>Batteria da sostituire</value>
+  </data>
+  <data name="Notif_Overload_Title" xml:space="preserve">
+    <value>UPS in sovraccarico</value>
+  </data>
+  <data name="Notif_UpdateAvailable_Title" xml:space="preserve">
+    <value>Aggiornamento disponibile</value>
+  </data>
+  <data name="Notif_PowerLost_Body" xml:space="preserve">
+    <value>{0} è passato a batteria: carica {1}%, autonomia stimata {2}.</value>
+  </data>
+  <data name="Notif_PowerRestored_Body" xml:space="preserve">
+    <value>{0} è tornato sulla rete elettrica. Batteria al {1}%.</value>
+  </data>
+  <data name="Notif_LowBattery_Body" xml:space="preserve">
+    <value>{0} segnala batteria scarica: carica {1}%, autonomia stimata {2}.</value>
+  </data>
+  <data name="Notif_ShutdownStarted_Body" xml:space="preserve">
+    <value>NutDesk ha avviato lo spegnimento di questo computer: {0}.</value>
+  </data>
+  <data name="Notif_Reason_BatteryLimit" xml:space="preserve">
+    <value>la carica o l'autonomia della batteria è sotto la soglia impostata</value>
+  </data>
+  <data name="Notif_Reason_Fsd" xml:space="preserve">
+    <value>il server NUT ha richiesto lo spegnimento forzato (FSD)</value>
+  </data>
+  <data name="Notif_ShutdownCancelled_Body" xml:space="preserve">
+    <value>La corrente è tornata prima che lo spegnimento fosse completato.</value>
+  </data>
+  <data name="Notif_ConnectionLost_Body" xml:space="preserve">
+    <value>NutDesk ha perso il contatto con {0} e continuerà a tentare la riconnessione.</value>
+  </data>
+  <data name="Notif_ConnectionRestored_Body" xml:space="preserve">
+    <value>NutDesk è di nuovo connesso a {0} dopo {1}.</value>
+  </data>
+  <data name="Notif_ReconnectAbandoned_Body" xml:space="preserve">
+    <value>NutDesk ha smesso di tentare di raggiungere {0}. {1}</value>
+  </data>
+  <data name="Notif_BatteryReplace_Body" xml:space="preserve">
+    <value>{0} segnala che la batteria va sostituita.</value>
+  </data>
+  <data name="Notif_Overload_Body" xml:space="preserve">
+    <value>{0} è in sovraccarico (carico {1}%). Riduci i dispositivi collegati.</value>
+  </data>
+  <data name="Notif_UpdateAvailable_Body" xml:space="preserve">
+    <value>È disponibile NutDesk {0}.</value>
+  </data>
+  <data name="Notif_Action_Open" xml:space="preserve">
+    <value>Apri NutDesk</value>
+  </data>
+  <data name="Notif_Unknown" xml:space="preserve">
+    <value>non disponibile</value>
+  </data>
+  <data name="Email_Section_Details" xml:space="preserve">
+    <value>Dettagli</value>
+  </data>
+  <data name="Email_Field_Time" xml:space="preserve">
+    <value>Ora</value>
+  </data>
+  <data name="Email_Field_Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="Email_Field_Server" xml:space="preserve">
+    <value>Server NUT</value>
+  </data>
+  <data name="Email_Field_Ups" xml:space="preserve">
+    <value>UPS</value>
+  </data>
+  <data name="Email_Field_Status" xml:space="preserve">
+    <value>Stato</value>
+  </data>
+  <data name="Email_Field_Charge" xml:space="preserve">
+    <value>Carica batteria</value>
+  </data>
+  <data name="Email_Field_Runtime" xml:space="preserve">
+    <value>Autonomia</value>
+  </data>
+  <data name="Email_Field_Load" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="Email_Field_InputVoltage" xml:space="preserve">
+    <value>Tensione ingresso</value>
+  </data>
+  <data name="Email_DelayedNote" xml:space="preserve">
+    <value>Questo messaggio è stato scritto alle {0} ma è stato possibile inviarlo solo alle {1}, probabilmente perché la rete non era disponibile.</value>
+  </data>
+  <data name="Email_SuppressedNote" xml:space="preserve">
+    <value>Eventi non inviati separatamente nell'intervallo di {1} min: {0}. Questo messaggio descrive lo stato più recente.</value>
+  </data>
+  <data name="Email_Footer" xml:space="preserve">
+    <value>Inviato da NutDesk dal computer {0}.</value>
+  </data>
+  <data name="Email_TestSubject" xml:space="preserve">
+    <value>Messaggio di prova</value>
+  </data>
+  <data name="Email_TestBody" xml:space="preserve">
+    <value>Se stai leggendo questo messaggio, NutDesk è in grado di inviare notifiche a questo indirizzo.</value>
+  </data>
+  <data name="Pref_Section_Notifications" xml:space="preserve">
+    <value>Notifiche</value>
+  </data>
+  <data name="Pref_Section_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Pref_Notif_WindowsEnabled" xml:space="preserve">
+    <value>Mostra le notifiche di Windows</value>
+  </data>
+  <data name="Pref_Notif_WindowsEnabledTip" xml:space="preserve">
+    <value>Le notifiche compaiono sullo schermo e restano nel centro notifiche di Windows.</value>
+  </data>
+  <data name="Pref_Notif_PersistCritical" xml:space="preserve">
+    <value>Mantieni gli avvisi critici sullo schermo finché non vengono chiusi</value>
+  </data>
+  <data name="Pref_Notif_PersistCriticalTip" xml:space="preserve">
+    <value>Le notifiche di mancanza corrente, batteria scarica e spegnimento non scompaiono da sole.</value>
+  </data>
+  <data name="Pref_Notif_EventsHeader" xml:space="preserve">
+    <value>Evento</value>
+  </data>
+  <data name="Pref_Notif_ColumnWindows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="Pref_Notif_ColumnEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Pref_Notif_EmailDisabledHint" xml:space="preserve">
+    <value>Attiva l'email nella sezione Email per usare questa colonna.</value>
+  </data>
+  <data name="Pref_Email_Enabled" xml:space="preserve">
+    <value>Invia notifiche via email</value>
+  </data>
+  <data name="Pref_Email_Server" xml:space="preserve">
+    <value>Server SMTP</value>
+  </data>
+  <data name="Pref_Email_Port" xml:space="preserve">
+    <value>Porta</value>
+  </data>
+  <data name="Pref_Email_Security" xml:space="preserve">
+    <value>Crittografia</value>
+  </data>
+  <data name="Pref_Email_SecurityAuto" xml:space="preserve">
+    <value>Automatica</value>
+  </data>
+  <data name="Pref_Email_SecurityNone" xml:space="preserve">
+    <value>Nessuna</value>
+  </data>
+  <data name="Pref_Email_SecurityStartTls" xml:space="preserve">
+    <value>STARTTLS</value>
+  </data>
+  <data name="Pref_Email_SecuritySsl" xml:space="preserve">
+    <value>SSL/TLS</value>
+  </data>
+  <data name="Pref_Email_SecurityTip" xml:space="preserve">
+    <value>La porta 587 usa di norma STARTTLS e la 465 SSL/TLS. Automatica sceglie in base alla porta.</value>
+  </data>
+  <data name="Pref_Email_Auth" xml:space="preserve">
+    <value>Il server richiede l'autenticazione</value>
+  </data>
+  <data name="Pref_Email_User" xml:space="preserve">
+    <value>Nome utente</value>
+  </data>
+  <data name="Pref_Email_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Pref_Email_PasswordTip" xml:space="preserve">
+    <value>Salvata cifrata e leggibile solo dal tuo account Windows. Per Gmail e Outlook usa una password per le app.</value>
+  </data>
+  <data name="Pref_Email_From" xml:space="preserve">
+    <value>Indirizzo mittente</value>
+  </data>
+  <data name="Pref_Email_To" xml:space="preserve">
+    <value>Destinatari</value>
+  </data>
+  <data name="Pref_Email_ToTip" xml:space="preserve">
+    <value>Uno o più indirizzi, separati da virgola o punto e virgola.</value>
+  </data>
+  <data name="Pref_Email_SubjectPrefix" xml:space="preserve">
+    <value>Prefisso dell'oggetto</value>
+  </data>
+  <data name="Pref_Email_Cooldown" xml:space="preserve">
+    <value>Intervallo minimo tra eventi ripetuti (min)</value>
+  </data>
+  <data name="Pref_Email_CooldownTip" xml:space="preserve">
+    <value>Gli eventi dello stesso tipo ripetuti entro questo intervallo vengono riassunti in un unico messaggio successivo. Lo stato più recente viene sempre inviato.</value>
+  </data>
+  <data name="Pref_Email_Test" xml:space="preserve">
+    <value>Invia email di prova</value>
+  </data>
+  <data name="Pref_Email_TestSending" xml:space="preserve">
+    <value>Invio in corso...</value>
+  </data>
+  <data name="Pref_Email_TestOk" xml:space="preserve">
+    <value>Email di prova inviata a {0}.</value>
+  </data>
+  <data name="Pref_Email_TestFailed" xml:space="preserve">
+    <value>Invio non riuscito: {0}</value>
+  </data>
+  <data name="Pref_Email_InvalidAddress" xml:space="preserve">
+    <value>Indirizzo email non valido</value>
+  </data>
+  <data name="Pref_Email_Pending" xml:space="preserve">
+    <value>{0} messaggi sono in attesa di invio.</value>
+  </data>
+  <data name="Notif_Reason_AutoReconnectOff" xml:space="preserve">
+    <value>La riconnessione automatica è disattivata nelle preferenze.</value>
+  </data>
+  <data name="Update_OpenReleasePage" xml:space="preserve">
+    <value>Apri la pagina della release</value>
+  </data>
+  <data name="Update_NoAsset" xml:space="preserve">
+    <value>Questa release non contiene un archivio scaricabile. Apri la pagina della release per vedere cosa offre.</value>
+  </data>
+  <data name="Log_SettingsImported" xml:space="preserve">
+    <value>Impostazioni importate da una posizione precedente di NutDesk.</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>Stai usando la versione più recente ({0}).</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>Impossibile verificare la presenza di aggiornamenti: {0}</value>
+  </data>
+  <data name="Update_Failure_Network" xml:space="preserve">
+    <value>Impossibile raggiungere GitHub. Controlla la connessione di rete e riprova.</value>
+  </data>
+  <data name="Update_Failure_RateLimited" xml:space="preserve">
+    <value>GitHub sta limitando le richieste da questa rete. Riprova tra un'ora.</value>
+  </data>
+  <data name="Update_Failure_ServerError" xml:space="preserve">
+    <value>GitHub ha risposto con un errore. Riprova più tardi.</value>
+  </data>
+  <data name="Update_Failure_NoPackage" xml:space="preserve">
+    <value>Questa release non contiene un pacchetto che NutDesk possa installare. Apri la pagina della release per scaricarla.</value>
+  </data>
+  <data name="Update_Failure_ChecksumMissing" xml:space="preserve">
+    <value>La release non pubblica il checksum SHA-256 del pacchetto: il download non può essere verificato e non verrà installato. Apri la pagina della release per aggiornare a mano.</value>
+  </data>
+  <data name="Update_Failure_ChecksumMismatch" xml:space="preserve">
+    <value>Il pacchetto scaricato non corrisponde al checksum SHA-256 pubblicato. È stato eliminato e non verrà installato. Riprova oppure apri la pagina della release.</value>
+  </data>
+  <data name="Update_Failure_InvalidPackage" xml:space="preserve">
+    <value>Il pacchetto scaricato è danneggiato o non è un pacchetto di NutDesk.</value>
+  </data>
+  <data name="Update_Failure_VersionMismatch" xml:space="preserve">
+    <value>Il pacchetto scaricato non contiene la versione annunciata dalla release.</value>
+  </data>
+  <data name="Update_Failure_FileSystem" xml:space="preserve">
+    <value>Impossibile scrivere i file dell'aggiornamento: {0}</value>
+  </data>
+  <data name="Update_Failure_LaunchFailed" xml:space="preserve">
+    <value>Impossibile avviare la nuova versione per installarla: {0}</value>
+  </data>
+  <data name="Update_Failure_Unexpected" xml:space="preserve">
+    <value>Errore imprevisto: {0}</value>
+  </data>
+  <data name="Update_ConfirmInstall" xml:space="preserve">
+    <value>NutDesk si chiuderà per qualche secondo e si riavvierà alla versione {0}.</value>
+  </data>
+  <data name="Update_BlockedByShutdown" xml:space="preserve">
+    <value>Non è possibile installare l'aggiornamento mentre è in corso uno spegnimento.</value>
+  </data>
+  <data name="Update_BlockedByBattery" xml:space="preserve">
+    <value>Non è possibile installare l'aggiornamento mentre l'UPS è alimentato a batteria: NutDesk deve continuare a sorvegliarlo. Riprova quando torna la corrente di rete.</value>
+  </data>
+  <data name="Update_ManualInstall" xml:space="preserve">
+    <value>NutDesk non può sostituire i propri file in {0}, quindi l'aggiornamento va completato a mano: chiudi NutDesk (Esci, nel menu dell'applicazione o in quello dell'icona nell'area di notifica), poi copia tutto il contenuto della cartella appena aperta in {0}, sostituendo i file. Le impostazioni vengono mantenute, anche se metti la nuova versione in un'altra cartella.</value>
+  </data>
+  <data name="Update_Apply_Caption" xml:space="preserve">
+    <value>Aggiornamento di NutDesk</value>
+  </data>
+  <data name="Update_Apply_BadArguments" xml:space="preserve">
+    <value>Questa copia di NutDesk è stata avviata per installare un aggiornamento, ma la riga di comando è incompleta ({0}). Non è stato modificato nulla.</value>
+  </data>
+  <data name="Update_Apply_InvalidTarget" xml:space="preserve">
+    <value>Impossibile installare l'aggiornamento: {0} non contiene NutDesk. Non è stato modificato nulla.</value>
+  </data>
+  <data name="Update_Apply_Timeout" xml:space="preserve">
+    <value>Impossibile installare l'aggiornamento perché NutDesk in esecuzione non si è chiuso entro {0} secondi. Non è stato modificato nulla.</value>
+  </data>
+  <data name="Update_Apply_CopyFailed" xml:space="preserve">
+    <value>Impossibile copiare i nuovi file in {0} ({1}). La versione precedente è stata ripristinata.</value>
+  </data>
+  <data name="Update_Apply_RestoreFailed" xml:space="preserve">
+    <value>L'aggiornamento non è riuscito e la versione precedente non è stata ripristinata del tutto ({0}). I file sostituiti sono salvati in {1}: ricopiali in {2}, oppure copia a mano la nuova versione in quella cartella.</value>
+  </data>
+  <data name="Update_Apply_RestartFailed" xml:space="preserve">
+    <value>Impossibile riavviare NutDesk ({0}). Avvia {1} a mano.</value>
+  </data>
+  <data name="Update_UpdatedFrom" xml:space="preserve">
+    <value>NutDesk aggiornato dalla versione {0} alla {1}.</value>
+  </data>
+  <data name="Notif_Updated_Title" xml:space="preserve">
+    <value>NutDesk aggiornato</value>
+  </data>
+  <data name="Update_InstallFailed" xml:space="preserve">
+    <value>Impossibile installare l'aggiornamento: {0}</value>
+  </data>
+  <data name="UpdateWindow_Title" xml:space="preserve">
+    <value>Aggiornamento di NutDesk</value>
+  </data>
+  <data name="UpdateWindow_Heading" xml:space="preserve">
+    <value>È disponibile NutDesk {0}</value>
+  </data>
+  <data name="UpdateWindow_Installed" xml:space="preserve">
+    <value>Versione installata: {0}</value>
+  </data>
+  <data name="UpdateWindow_Released" xml:space="preserve">
+    <value>Pubblicata il {0}</value>
+  </data>
+  <data name="UpdateWindow_PreRelease" xml:space="preserve">
+    <value>Anteprima</value>
+  </data>
+  <data name="UpdateWindow_WhatsNew" xml:space="preserve">
+    <value>Novità</value>
+  </data>
+  <data name="UpdateWindow_NoNotes" xml:space="preserve">
+    <value>Questa release non ha note.</value>
+  </data>
+  <data name="UpdateWindow_Install" xml:space="preserve">
+    <value>Installa aggiornamento</value>
+  </data>
+  <data name="UpdateWindow_InstallTip" xml:space="preserve">
+    <value>Scarica l'aggiornamento, lo verifica con il checksum SHA-256 pubblicato e chiede conferma prima di installarlo.</value>
+  </data>
+  <data name="UpdateWindow_Retry" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
+  <data name="UpdateWindow_InstallNow" xml:space="preserve">
+    <value>Installa e riavvia</value>
+  </data>
+  <data name="UpdateWindow_OpenFolder" xml:space="preserve">
+    <value>Apri cartella</value>
+  </data>
+  <data name="UpdateWindow_OpenFolderTip" xml:space="preserve">
+    <value>Mostra i file della nuova versione in Esplora file.</value>
+  </data>
+  <data name="UpdateWindow_Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="UpdateWindow_Skip" xml:space="preserve">
+    <value>Salta questa versione</value>
+  </data>
+  <data name="UpdateWindow_SkipTip" xml:space="preserve">
+    <value>I controlli automatici non proporranno più questa versione; un controllo manuale la mostra comunque.</value>
+  </data>
+  <data name="UpdateWindow_ReleasePage" xml:space="preserve">
+    <value>Pagina della release</value>
+  </data>
+  <data name="UpdateWindow_Close" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="UpdateWindow_Downloading" xml:space="preserve">
+    <value>Download dell'aggiornamento in corso...</value>
+  </data>
+  <data name="UpdateWindow_Progress" xml:space="preserve">
+    <value>{0} di {1}</value>
+  </data>
+  <data name="UpdateWindow_Verifying" xml:space="preserve">
+    <value>Verifica del download con il checksum SHA-256 pubblicato...</value>
+  </data>
+  <data name="UpdateWindow_Extracting" xml:space="preserve">
+    <value>Estrazione della nuova versione...</value>
+  </data>
+  <data name="UpdateWindow_Verified" xml:space="preserve">
+    <value>Scaricato e verificato: il checksum SHA-256 corrisponde a quello pubblicato.</value>
+  </data>
+  <data name="UpdateWindow_Cancelled" xml:space="preserve">
+    <value>Download annullato.</value>
+  </data>
+  <data name="UpdateWindow_Installing" xml:space="preserve">
+    <value>Chiusura di NutDesk per installare l'aggiornamento...</value>
+  </data>
+  <data name="UpdateWindow_Skipped" xml:space="preserve">
+    <value>Versione {0} saltata: i controlli automatici non la proporranno più.</value>
+  </data>
+</root>

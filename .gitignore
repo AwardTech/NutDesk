@@ -1,0 +1,40 @@
+# Build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+publish/
+dist/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Tests
+TestResults/
+[Tt]est[Rr]esult*/
+
+# Logs and crash reports
+*.log
+
+# Test doubles in tools/: what they write while running
+tools/fake-smtp/maildir/
+tools/fake-upsd/fake_upsd_override.json
+__pycache__/
+*.pyc
+
+# OS clutter
+Thumbs.db
+Desktop.ini
+.DS_Store

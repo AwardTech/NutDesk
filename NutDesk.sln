@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutDesk", "src\NutDesk\NutDesk.csproj", "{7E4A2D55-3B9C-4F20-8E11-9C7A5D2E4B02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutDesk.Common", "src\NutDesk.Common\NutDesk.Common.csproj", "{0C2E4F1B-6A18-4C4E-9C6C-2F5B91D3A101}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E4A2D55-3B9C-4F20-8E11-9C7A5D2E4B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4A2D55-3B9C-4F20-8E11-9C7A5D2E4B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4A2D55-3B9C-4F20-8E11-9C7A5D2E4B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4A2D55-3B9C-4F20-8E11-9C7A5D2E4B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C2E4F1B-6A18-4C4E-9C6C-2F5B91D3A101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C2E4F1B-6A18-4C4E-9C6C-2F5B91D3A101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C2E4F1B-6A18-4C4E-9C6C-2F5B91D3A101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C2E4F1B-6A18-4C4E-9C6C-2F5B91D3A101}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

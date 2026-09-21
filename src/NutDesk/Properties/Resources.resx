@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="1025" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1025.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1026" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1026.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1028" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1028.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1032" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1032.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1040" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1040.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1057" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1057.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1058" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1058.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1060" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1060.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1064" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1064.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1072" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1072.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1089" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1089.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1090" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1090.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1092" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1092.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1096" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1096.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1104" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1104.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1121" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1121.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1122" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1122.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1124" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1124.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1136" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1136.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1152" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1152.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1216" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1216.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1280" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1280.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1344" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1344.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2001" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2001_ViewLogFile.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="2002" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2002_Delete_LogFile.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="App_Event_Str_01" xml:space="preserve">
+    <value>Application shut down at</value>
+  </data>
+  <data name="Battery_Charged" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Battery_Charged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery_Charging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Battery_Charging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Battery_Discharging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Battery_Discharging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CopyHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CopyHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Delete_LogFile_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Delete_LogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DetectedPreviousPrefsData" xml:space="preserve">
+    <value>Previous preferences data detected in the Registry.</value>
+    <comment>Notify the user that preferences data from the old system was detected in the Registry hive.</comment>
+  </data>
+  <data name="disconnect2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disconnect2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Frm_Main_Str_03" xml:space="preserve">
+    <value>Reconnecting</value>
+  </data>
+  <data name="Frm_Main_Str_05" xml:space="preserve">
+    <value>Not Connected</value>
+  </data>
+  <data name="Frm_Main_Str_06" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="Frm_Main_Str_07" xml:space="preserve">
+    <value>On Line</value>
+  </data>
+  <data name="Frm_Main_Str_08" xml:space="preserve">
+    <value>On Battery ({0}%)</value>
+  </data>
+  <data name="Frm_Main_Str_09" xml:space="preserve">
+    <value>Low Battery</value>
+  </data>
+  <data name="Frm_Main_Str_10" xml:space="preserve">
+    <value>Battery OK</value>
+  </data>
+  <data name="Frm_Main_Str_11" xml:space="preserve">
+    <value>Unknown UPS Name</value>
+  </data>
+  <data name="Frm_Main_Str_12" xml:space="preserve">
+    <value>Lost connection to {0}:{1}</value>
+  </data>
+  <data name="Frm_Main_Str_13" xml:space="preserve">
+    <value>Wrong Login ID (Username or Password)</value>
+  </data>
+  <data name="Frm_Main_Str_14" xml:space="preserve">
+    <value>Restarting NutDesk after waking up from Windows.</value>
+  </data>
+  <data name="Frm_Main_Str_15" xml:space="preserve">
+    <value>Windows standby. NutDesk will disconnect.</value>
+  </data>
+  <data name="Frm_Shutdown_Str_01" xml:space="preserve">
+    <value>Battery_Charge : {0}
+Remaining Time : {1}</value>
+  </data>
+  <data name="GitHub_URL" xml:space="preserve">
+    <value>https://github.com/kriseniprak/NutDesk</value>
+  </data>
+  <data name="internetconnection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\internetconnection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="List_Var_Gui__SaveFileError_Text" xml:space="preserve">
+    <value>Error encountered when saving UPS data to file: {0}</value>
+    <comment>Alert the user to an error that occurred while saving to a file, puncuated to indicate that the error will follow.</comment>
+  </data>
+  <data name="List_Var_Gui__SaveFileSuccess" xml:space="preserve">
+    <value>Successfully saved UPS data to file: {0}</value>
+    <comment>Notify the user that the UPS data was successfully saved to a file, and provide the location.</comment>
+  </data>
+  <data name="List_Var_Gui__SaveFile_Caption" xml:space="preserve">
+    <value>Save UPS Data to File</value>
+    <comment>Title of Forms relating to saving the UPS data to a file.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Caption" xml:space="preserve">
+    <value>Clipboard Error</value>
+    <comment>Title of the error notification window that displays when an error is encountered setting the clipboard text.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextError_Text" xml:space="preserve">
+    <value>Error encountered when copying UPS data to the Clipboard: {0}</value>
+    <comment>Alert the user that there was a problem copying the UPS data to the clipboard, punctuated to indicate that the error will follow.</comment>
+  </data>
+  <data name="List_Var_Gui__SetCpbTextSuccess" xml:space="preserve">
+    <value>Successfully copied UPS data to the Clipboard.</value>
+    <comment>Notify the user that the UPS data was copied to their Clipboard successfully.</comment>
+  </data>
+  <data name="LogCheckingForUpdate" xml:space="preserve">
+    <value>Checking for update...</value>
+    <comment>Inform the user that NutDesk is checking for an update.</comment>
+  </data>
+  <data name="Log_Str_01" xml:space="preserve">
+    <value>Preferences changed</value>
+  </data>
+  <data name="Log_Str_02" xml:space="preserve">
+    <value>Connected to the NUT server {0}:{1}</value>
+  </data>
+  <data name="Log_Str_03" xml:space="preserve">
+    <value>Connection to the NUT server {0}:{1} failed: {2}</value>
+  </data>
+  <data name="Log_Str_04" xml:space="preserve">
+    <value>Automatic reconnection</value>
+  </data>
+  <data name="Log_Str_05" xml:space="preserve">
+    <value>Disconnected from the NUT server</value>
+  </data>
+  <data name="Log_Str_08" xml:space="preserve">
+    <value>Shutdown conditions met: starting the shutdown</value>
+  </data>
+  <data name="Log_Str_09" xml:space="preserve">
+    <value>Shutdown cancelled</value>
+  </data>
+  <data name="Log_Str_10" xml:space="preserve">
+    <value>No update available</value>
+  </data>
+  <data name="Log_Str_11" xml:space="preserve">
+    <value>Version {0} Available</value>
+  </data>
+  <data name="Log_Str_12" xml:space="preserve">
+    <value>Stop condition imposed by the NUT server</value>
+  </data>
+  <data name="Log_Str_ErrorDecrypting" xml:space="preserve">
+    <value>Error loading encrypted Settings (username/password)</value>
+    <comment>Short log string to alert the user that there was an error loading encrypted Settings, and give examples of what those Settings were.</comment>
+  </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Disabled_TooltipText" xml:space="preserve">
+    <value>Old preferences were not detected in your system.</value>
+    <comment>Similar to _Enabled tooltip, except that the preferences were not detected.</comment>
+  </data>
+  <data name="ManageOldPrefsToolstripMenuItem_Enabled_TooltipText" xml:space="preserve">
+    <value>Old preferences detected. Click to run the import wizard.</value>
+    <comment>Tooltip of the "manage old prefs" menu item, explaining that the old preferences were detected and that clicking will open the wizard dialog.</comment>
+  </data>
+  <data name="regedit_exe_14_100_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\regedit.exe_14_100-0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RepeatHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="saveHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpgradePrefsDialog_BackupLocationTitle" xml:space="preserve">
+    <value>Save WinNUT Registry Key</value>
+    <comment>Title of the SaveFileDialog that prompts the user to select the file and location they would like to save their WinNUT Registry preferences to.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_BackupProcedureCompleted" xml:space="preserve">
+    <value>The old preferences have been backed up to {0}</value>
+    <comment>Notify the user that the old preferences have been exported to a file, and give the full path with {0}.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_Cancelled" xml:space="preserve">
+    <value>The upgrade process was cancelled: using default settings.</value>
+    <comment>Notify the user that the upgrade dialog was cancelled, and that default settings will be used instead.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_DeleteProcedureComplete" xml:space="preserve">
+    <value>The old preferences have been removed from your Registry.</value>
+    <comment>Notify the user that the old preferences have been removed from their Registry.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_ErrorEncountered" xml:space="preserve">
+    <value>An error occurred during the upgrade procedure:
+
+{0}
+
+Please correct the error, or cancel the upgrade dialog to continue with the default settings.</value>
+    <comment>Alert the user that an error occurred during the upgrade procedure, attempt to give a brief summary of the error, and prompt them to take the next step.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_ImportProcedureCompleted" xml:space="preserve">
+    <value>The old preferences have been imported.</value>
+    <comment>Notify the user that the import procedure has completed.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistCaption" xml:space="preserve">
+    <value>No preferences detected</value>
+    <comment>A brief caption for the error message.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_NoPrefsExistError" xml:space="preserve">
+    <value>No preferences were detected in the Registry. Unable to continue.</value>
+    <comment>Alert the user that the dialog is unable to continue, since no preferences are detected in the Registry.</comment>
+  </data>
+  <data name="UpgradePrefsDialog_UnmatchedPairs" xml:space="preserve">
+    <value>There were {0} unknown preferences. See log for more details.</value>
+    <comment>Alert the user to how many unmatched preferences there were {0}.</comment>
+  </data>
+  <data name="ups_104x104" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ups_104x104.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VariableUnavailable" xml:space="preserve">
+    <value>Unavailable</value>
+    <comment>Indicate that a variable is unavailable</comment>
+  </data>
+  <data name="ViewLogFile_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ViewLogFile_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NutDesk.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UpdaterIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NutDesk-Updater.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="XP_Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XP_Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Menu_Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Theme_FollowWindows" xml:space="preserve">
+    <value>Follow Windows</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Frm_Main_Str_Connecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="List_Var_Gui_GetVarsError" xml:space="preserve">
+    <value>Error encountered trying to get variables from the UPS:</value>
+  </data>
+  <data name="List_Var_Gui_GetVarsErrorCaption" xml:space="preserve">
+    <value>Error Encountered</value>
+  </data>
+  <data name="FileFilter_TextFiles" xml:space="preserve">
+    <value>Text files|*.txt|All files|*.*</value>
+  </data>
+  <data name="FileFilter_RegistryFiles" xml:space="preserve">
+    <value>Windows Registry files (*.reg)|*.reg|All files (*.*)|*.*</value>
+  </data>
+  <data name="Pref_Gui_SaveErrorCaption" xml:space="preserve">
+    <value>Error while saving</value>
+  </data>
+  <data name="Pref_Gui_SaveErrorMessage" xml:space="preserve">
+    <value>NutDesk could not save your preferences. The details have been written to the log.</value>
+  </data>
+  <data name="Pref_Gui_RangeErrorCaption" xml:space="preserve">
+    <value>Invalid calibration range</value>
+  </data>
+  <data name="Pref_Gui_RangeErrorMessage" xml:space="preserve">
+    <value>The minimum value must be lower than the maximum value. Check the highlighted fields on the Calibration tab.</value>
+  </data>
+  <data name="Dashboard_CaptionDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="CrashDialog_Caption" xml:space="preserve">
+    <value>Critical Error Occurred in NutDesk</value>
+  </data>
+  <data name="CrashDialog_Message" xml:space="preserve">
+    <value>NutDesk has encountered a critical error and will close soon.
+You can:
+- generate a crash report which will contain most of the configured parameters (without sensitive
+  information such as your connection information to your NUT server), the last 50 events logged
+  and the error message displayed below.
+  This information will then be copied to your clipboard for easy reporting.
+- simply close NutDesk without generating a report.</value>
+  </data>
+  <data name="CrashDialog_BtnClose" xml:space="preserve">
+    <value>Close NutDesk</value>
+  </data>
+  <data name="CrashDialog_BtnGenerate" xml:space="preserve">
+    <value>Generate Report and Close NutDesk</value>
+  </data>
+  <data name="Menu_Log" xml:space="preserve">
+    <value>Event log</value>
+  </data>
+  <data name="LogWindow_Title" xml:space="preserve">
+    <value>Event log</value>
+  </data>
+  <data name="LogWindow_SearchPlaceholder" xml:space="preserve">
+    <value>Search events</value>
+  </data>
+  <data name="LogWindow_OnlyImportant" xml:space="preserve">
+    <value>Only important events</value>
+  </data>
+  <data name="LogWindow_OnlyImportantTip" xml:space="preserve">
+    <value>Show only the translated, user-facing events: connections, power source changes and failures.</value>
+  </data>
+  <data name="LogWindow_AutoScroll" xml:space="preserve">
+    <value>Follow new events</value>
+  </data>
+  <data name="LogWindow_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="LogWindow_CopyTip" xml:space="preserve">
+    <value>Copy the events currently listed to the clipboard.</value>
+  </data>
+  <data name="LogWindow_OpenFile" xml:space="preserve">
+    <value>Open log file</value>
+  </data>
+  <data name="LogWindow_OpenFileTip" xml:space="preserve">
+    <value>Open the folder containing today's log file.</value>
+  </data>
+  <data name="LogWindow_OpenFileDisabled" xml:space="preserve">
+    <value>File logging is turned off in the preferences.</value>
+  </data>
+  <data name="LogWindow_ColumnTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="LogWindow_ColumnLevel" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="LogWindow_ColumnSource" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="LogWindow_ColumnMessage" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="LogWindow_LevelNotice" xml:space="preserve">
+    <value>Notice</value>
+  </data>
+  <data name="LogWindow_LevelWarning" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="LogWindow_LevelError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="LogWindow_LevelDebug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="LogWindow_Empty" xml:space="preserve">
+    <value>No event matches the current filters.</value>
+  </data>
+  <data name="LogWindow_Count" xml:space="preserve">
+    <value>{0} of {1} events</value>
+  </data>
+  <data name="Dashboard_MoreOptions" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="Notif_PowerLost_Title" xml:space="preserve">
+    <value>Power failure</value>
+  </data>
+  <data name="Notif_PowerRestored_Title" xml:space="preserve">
+    <value>Power restored</value>
+  </data>
+  <data name="Notif_LowBattery_Title" xml:space="preserve">
+    <value>Battery low</value>
+  </data>
+  <data name="Notif_ShutdownStarted_Title" xml:space="preserve">
+    <value>Shutdown in progress</value>
+  </data>
+  <data name="Notif_ShutdownCancelled_Title" xml:space="preserve">
+    <value>Shutdown cancelled</value>
+  </data>
+  <data name="Notif_ConnectionLost_Title" xml:space="preserve">
+    <value>Connection to the NUT server lost</value>
+  </data>
+  <data name="Notif_ConnectionRestored_Title" xml:space="preserve">
+    <value>Connection restored</value>
+  </data>
+  <data name="Notif_ReconnectAbandoned_Title" xml:space="preserve">
+    <value>Monitoring stopped</value>
+  </data>
+  <data name="Notif_BatteryReplace_Title" xml:space="preserve">
+    <value>Battery needs replacing</value>
+  </data>
+  <data name="Notif_Overload_Title" xml:space="preserve">
+    <value>UPS overloaded</value>
+  </data>
+  <data name="Notif_UpdateAvailable_Title" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="Notif_PowerLost_Body" xml:space="preserve">
+    <value>{0} is running on battery: {1}% charge, about {2} of runtime left.</value>
+  </data>
+  <data name="Notif_PowerRestored_Body" xml:space="preserve">
+    <value>{0} is back on mains power. Battery at {1}%.</value>
+  </data>
+  <data name="Notif_LowBattery_Body" xml:space="preserve">
+    <value>{0} reports a low battery: {1}% charge, about {2} left.</value>
+  </data>
+  <data name="Notif_ShutdownStarted_Body" xml:space="preserve">
+    <value>NutDesk has started shutting down this computer: {0}.</value>
+  </data>
+  <data name="Notif_Reason_BatteryLimit" xml:space="preserve">
+    <value>battery charge or runtime is below the configured limit</value>
+  </data>
+  <data name="Notif_Reason_Fsd" xml:space="preserve">
+    <value>the NUT server requested a forced shutdown (FSD)</value>
+  </data>
+  <data name="Notif_ShutdownCancelled_Body" xml:space="preserve">
+    <value>Power came back before the shutdown completed.</value>
+  </data>
+  <data name="Notif_ConnectionLost_Body" xml:space="preserve">
+    <value>NutDesk lost contact with {0} and will keep trying to reconnect.</value>
+  </data>
+  <data name="Notif_ConnectionRestored_Body" xml:space="preserve">
+    <value>NutDesk is connected to {0} again after {1}.</value>
+  </data>
+  <data name="Notif_ReconnectAbandoned_Body" xml:space="preserve">
+    <value>NutDesk stopped trying to reach {0}. {1}</value>
+  </data>
+  <data name="Notif_BatteryReplace_Body" xml:space="preserve">
+    <value>{0} reports that its battery should be replaced.</value>
+  </data>
+  <data name="Notif_Overload_Body" xml:space="preserve">
+    <value>{0} is overloaded ({1}% load). Reduce the equipment connected to it.</value>
+  </data>
+  <data name="Notif_UpdateAvailable_Body" xml:space="preserve">
+    <value>NutDesk {0} is available.</value>
+  </data>
+  <data name="Notif_Action_Open" xml:space="preserve">
+    <value>Open NutDesk</value>
+  </data>
+  <data name="Notif_Unknown" xml:space="preserve">
+    <value>unknown</value>
+  </data>
+  <data name="Email_Section_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Email_Field_Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Email_Field_Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="Email_Field_Server" xml:space="preserve">
+    <value>NUT server</value>
+  </data>
+  <data name="Email_Field_Ups" xml:space="preserve">
+    <value>UPS</value>
+  </data>
+  <data name="Email_Field_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Email_Field_Charge" xml:space="preserve">
+    <value>Battery charge</value>
+  </data>
+  <data name="Email_Field_Runtime" xml:space="preserve">
+    <value>Runtime</value>
+  </data>
+  <data name="Email_Field_Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="Email_Field_InputVoltage" xml:space="preserve">
+    <value>Input voltage</value>
+  </data>
+  <data name="Email_DelayedNote" xml:space="preserve">
+    <value>This message was written at {0} but could only be sent at {1}, probably because the network was down.</value>
+  </data>
+  <data name="Email_SuppressedNote" xml:space="preserve">
+    <value>Events not sent separately during the {1}-minute interval: {0}. This message describes the latest state.</value>
+  </data>
+  <data name="Email_Footer" xml:space="preserve">
+    <value>Sent by NutDesk on {0}.</value>
+  </data>
+  <data name="Email_TestSubject" xml:space="preserve">
+    <value>Test message</value>
+  </data>
+  <data name="Email_TestBody" xml:space="preserve">
+    <value>If you are reading this, NutDesk can send notifications to this address.</value>
+  </data>
+  <data name="Pref_Section_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Pref_Section_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Pref_Notif_WindowsEnabled" xml:space="preserve">
+    <value>Show Windows notifications</value>
+  </data>
+  <data name="Pref_Notif_WindowsEnabledTip" xml:space="preserve">
+    <value>Notifications appear on screen and stay in the Windows notification center.</value>
+  </data>
+  <data name="Pref_Notif_PersistCritical" xml:space="preserve">
+    <value>Keep critical alerts on screen until dismissed</value>
+  </data>
+  <data name="Pref_Notif_PersistCriticalTip" xml:space="preserve">
+    <value>Power failure, low battery and shutdown notifications do not disappear on their own.</value>
+  </data>
+  <data name="Pref_Notif_EventsHeader" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Pref_Notif_ColumnWindows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="Pref_Notif_ColumnEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Pref_Notif_EmailDisabledHint" xml:space="preserve">
+    <value>Turn on email in the Email section to use this column.</value>
+  </data>
+  <data name="Pref_Email_Enabled" xml:space="preserve">
+    <value>Send email notifications</value>
+  </data>
+  <data name="Pref_Email_Server" xml:space="preserve">
+    <value>SMTP server</value>
+  </data>
+  <data name="Pref_Email_Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Pref_Email_Security" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="Pref_Email_SecurityAuto" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="Pref_Email_SecurityNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Pref_Email_SecurityStartTls" xml:space="preserve">
+    <value>STARTTLS</value>
+  </data>
+  <data name="Pref_Email_SecuritySsl" xml:space="preserve">
+    <value>SSL/TLS</value>
+  </data>
+  <data name="Pref_Email_SecurityTip" xml:space="preserve">
+    <value>Port 587 normally uses STARTTLS and port 465 SSL/TLS. Automatic chooses from the port.</value>
+  </data>
+  <data name="Pref_Email_Auth" xml:space="preserve">
+    <value>Server requires authentication</value>
+  </data>
+  <data name="Pref_Email_User" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Pref_Email_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Pref_Email_PasswordTip" xml:space="preserve">
+    <value>Stored encrypted, readable only by your Windows account. For Gmail and Outlook use an app password.</value>
+  </data>
+  <data name="Pref_Email_From" xml:space="preserve">
+    <value>Sender address</value>
+  </data>
+  <data name="Pref_Email_To" xml:space="preserve">
+    <value>Recipients</value>
+  </data>
+  <data name="Pref_Email_ToTip" xml:space="preserve">
+    <value>One or more addresses, separated by commas or semicolons.</value>
+  </data>
+  <data name="Pref_Email_SubjectPrefix" xml:space="preserve">
+    <value>Subject prefix</value>
+  </data>
+  <data name="Pref_Email_Cooldown" xml:space="preserve">
+    <value>Minimum interval between repeated events (min)</value>
+  </data>
+  <data name="Pref_Email_CooldownTip" xml:space="preserve">
+    <value>Repeated events of the same kind within this interval are summarised in one later message. The latest state is always sent.</value>
+  </data>
+  <data name="Pref_Email_Test" xml:space="preserve">
+    <value>Send test email</value>
+  </data>
+  <data name="Pref_Email_TestSending" xml:space="preserve">
+    <value>Sending...</value>
+  </data>
+  <data name="Pref_Email_TestOk" xml:space="preserve">
+    <value>Test email sent to {0}.</value>
+  </data>
+  <data name="Pref_Email_TestFailed" xml:space="preserve">
+    <value>Sending failed: {0}</value>
+  </data>
+  <data name="Pref_Email_InvalidAddress" xml:space="preserve">
+    <value>Not a valid email address</value>
+  </data>
+  <data name="Pref_Email_Pending" xml:space="preserve">
+    <value>{0} messages are waiting to be sent.</value>
+  </data>
+  <data name="Notif_Reason_AutoReconnectOff" xml:space="preserve">
+    <value>Automatic reconnection is turned off in the preferences.</value>
+  </data>
+  <data name="Update_OpenReleasePage" xml:space="preserve">
+    <value>Open the release page</value>
+  </data>
+  <data name="Update_NoAsset" xml:space="preserve">
+    <value>This release has no downloadable archive. Open the release page to see what it offers.</value>
+  </data>
+  <data name="Log_SettingsImported" xml:space="preserve">
+    <value>Settings imported from a previous NutDesk location.</value>
+  </data>
+  <data name="Update_UpToDate" xml:space="preserve">
+    <value>You are running the latest version ({0}).</value>
+  </data>
+  <data name="Update_CheckFailed" xml:space="preserve">
+    <value>Could not check for updates: {0}</value>
+  </data>
+  <data name="Update_Failure_Network" xml:space="preserve">
+    <value>GitHub could not be reached. Check the network connection and try again.</value>
+  </data>
+  <data name="Update_Failure_RateLimited" xml:space="preserve">
+    <value>GitHub is limiting the requests from this network. Try again in an hour.</value>
+  </data>
+  <data name="Update_Failure_ServerError" xml:space="preserve">
+    <value>GitHub answered with an error. Try again later.</value>
+  </data>
+  <data name="Update_Failure_NoPackage" xml:space="preserve">
+    <value>This release has no package NutDesk can install. Open the release page to get it.</value>
+  </data>
+  <data name="Update_Failure_ChecksumMissing" xml:space="preserve">
+    <value>The release does not publish a SHA-256 checksum for its package, so the download cannot be verified and will not be installed. Open the release page to update by hand.</value>
+  </data>
+  <data name="Update_Failure_ChecksumMismatch" xml:space="preserve">
+    <value>The downloaded package does not match its published SHA-256 checksum. It has been deleted and will not be installed. Try again, or open the release page.</value>
+  </data>
+  <data name="Update_Failure_InvalidPackage" xml:space="preserve">
+    <value>The downloaded package is damaged or is not a NutDesk package.</value>
+  </data>
+  <data name="Update_Failure_VersionMismatch" xml:space="preserve">
+    <value>The downloaded package does not contain the version the release announces.</value>
+  </data>
+  <data name="Update_Failure_FileSystem" xml:space="preserve">
+    <value>The update files could not be written: {0}</value>
+  </data>
+  <data name="Update_Failure_LaunchFailed" xml:space="preserve">
+    <value>The new version could not be started to install itself: {0}</value>
+  </data>
+  <data name="Update_Failure_Unexpected" xml:space="preserve">
+    <value>Unexpected error: {0}</value>
+  </data>
+  <data name="Update_ConfirmInstall" xml:space="preserve">
+    <value>NutDesk will close for a few seconds and restart as version {0}.</value>
+  </data>
+  <data name="Update_BlockedByShutdown" xml:space="preserve">
+    <value>The update cannot be installed while a shutdown is in progress.</value>
+  </data>
+  <data name="Update_BlockedByBattery" xml:space="preserve">
+    <value>The update cannot be installed while the UPS is running on battery: NutDesk has to keep watching it. Try again when mains power is back.</value>
+  </data>
+  <data name="Update_ManualInstall" xml:space="preserve">
+    <value>NutDesk cannot replace its own files in {0}, so the update has to be finished by hand: exit NutDesk (Exit, in the application menu or in the tray icon's menu), then copy everything in the folder that has just opened over {0}, replacing the files. Your settings are kept, even if you put the new version in another folder.</value>
+  </data>
+  <data name="Update_Apply_Caption" xml:space="preserve">
+    <value>NutDesk update</value>
+  </data>
+  <data name="Update_Apply_BadArguments" xml:space="preserve">
+    <value>This copy of NutDesk was started to install an update, but its command line is incomplete ({0}). Nothing has been changed.</value>
+  </data>
+  <data name="Update_Apply_InvalidTarget" xml:space="preserve">
+    <value>The update could not be installed: {0} does not contain NutDesk. Nothing has been changed.</value>
+  </data>
+  <data name="Update_Apply_Timeout" xml:space="preserve">
+    <value>The update could not be installed because the running NutDesk did not close within {0} seconds. Nothing has been changed.</value>
+  </data>
+  <data name="Update_Apply_CopyFailed" xml:space="preserve">
+    <value>The new files could not be copied into {0} ({1}). The previous version has been restored.</value>
+  </data>
+  <data name="Update_Apply_RestoreFailed" xml:space="preserve">
+    <value>The update failed and the previous version could not be completely restored ({0}). The replaced files are saved in {1}: copy them back into {2}, or copy the new version there by hand.</value>
+  </data>
+  <data name="Update_Apply_RestartFailed" xml:space="preserve">
+    <value>NutDesk could not be restarted ({0}). Start {1} by hand.</value>
+  </data>
+  <data name="Update_UpdatedFrom" xml:space="preserve">
+    <value>NutDesk updated from {0} to {1}.</value>
+  </data>
+  <data name="Notif_Updated_Title" xml:space="preserve">
+    <value>NutDesk updated</value>
+  </data>
+  <data name="Update_InstallFailed" xml:space="preserve">
+    <value>The update could not be installed: {0}</value>
+  </data>
+  <data name="UpdateWindow_Title" xml:space="preserve">
+    <value>NutDesk update</value>
+  </data>
+  <data name="UpdateWindow_Heading" xml:space="preserve">
+    <value>NutDesk {0} is available</value>
+  </data>
+  <data name="UpdateWindow_Installed" xml:space="preserve">
+    <value>You have version {0}</value>
+  </data>
+  <data name="UpdateWindow_Released" xml:space="preserve">
+    <value>Released on {0}</value>
+  </data>
+  <data name="UpdateWindow_PreRelease" xml:space="preserve">
+    <value>Pre-release</value>
+  </data>
+  <data name="UpdateWindow_WhatsNew" xml:space="preserve">
+    <value>What's new</value>
+  </data>
+  <data name="UpdateWindow_NoNotes" xml:space="preserve">
+    <value>This release comes without notes.</value>
+  </data>
+  <data name="UpdateWindow_Install" xml:space="preserve">
+    <value>Install update</value>
+  </data>
+  <data name="UpdateWindow_InstallTip" xml:space="preserve">
+    <value>Downloads the update, checks it against its published SHA-256 checksum, then asks before installing it.</value>
+  </data>
+  <data name="UpdateWindow_Retry" xml:space="preserve">
+    <value>Try again</value>
+  </data>
+  <data name="UpdateWindow_InstallNow" xml:space="preserve">
+    <value>Install and restart</value>
+  </data>
+  <data name="UpdateWindow_OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="UpdateWindow_OpenFolderTip" xml:space="preserve">
+    <value>Shows the files of the new version in Explorer.</value>
+  </data>
+  <data name="UpdateWindow_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="UpdateWindow_Skip" xml:space="preserve">
+    <value>Skip this version</value>
+  </data>
+  <data name="UpdateWindow_SkipTip" xml:space="preserve">
+    <value>Automatic checks will not offer this version again. Checking by hand still shows it.</value>
+  </data>
+  <data name="UpdateWindow_ReleasePage" xml:space="preserve">
+    <value>Release page</value>
+  </data>
+  <data name="UpdateWindow_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="UpdateWindow_Downloading" xml:space="preserve">
+    <value>Downloading the update...</value>
+  </data>
+  <data name="UpdateWindow_Progress" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="UpdateWindow_Verifying" xml:space="preserve">
+    <value>Checking the download against its published SHA-256 checksum...</value>
+  </data>
+  <data name="UpdateWindow_Extracting" xml:space="preserve">
+    <value>Unpacking the new version...</value>
+  </data>
+  <data name="UpdateWindow_Verified" xml:space="preserve">
+    <value>Downloaded and verified: the SHA-256 checksum matches the published one.</value>
+  </data>
+  <data name="UpdateWindow_Cancelled" xml:space="preserve">
+    <value>Download cancelled.</value>
+  </data>
+  <data name="UpdateWindow_Installing" xml:space="preserve">
+    <value>Closing NutDesk to install the update...</value>
+  </data>
+  <data name="UpdateWindow_Skipped" xml:space="preserve">
+    <value>Version {0} skipped: automatic checks will not offer it again.</value>
+  </data>
+</root>
