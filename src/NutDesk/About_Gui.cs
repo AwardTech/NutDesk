@@ -37,6 +37,7 @@ namespace NutDesk
         {
             Load += About_Gui_Load;
             Btn_OK.Click += Btn_OK_Click;
+            LkLbl_AwardTech.LinkClicked += LkLbl_Github_LinkClicked;
             LkLbl_Github.LinkClicked += LkLbl_Github_LinkClicked;
         }
 

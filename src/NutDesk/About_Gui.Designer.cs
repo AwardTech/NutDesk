@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About_Gui));
             this.GBox = new System.Windows.Forms.GroupBox();
+            this.LkLbl_AwardTech = new System.Windows.Forms.LinkLabel();
             this.LkLbl_Github = new System.Windows.Forms.LinkLabel();
             this.Lbl_Github = new System.Windows.Forms.Label();
             this.Lbl_Sf = new System.Windows.Forms.Label();
@@ -47,6 +48,7 @@
             // GBox
             //
             this.GBox.Controls.Add(this.Label_License);
+            this.GBox.Controls.Add(this.LkLbl_AwardTech);
             this.GBox.Controls.Add(this.LkLbl_Github);
             this.GBox.Controls.Add(this.Lbl_Github);
             this.GBox.Controls.Add(this.Lbl_Sf);
@@ -57,7 +59,7 @@
             this.GBox.Controls.Add(this.PictureBox1);
             this.GBox.Location = new System.Drawing.Point(4, 4);
             this.GBox.Name = "GBox";
-            this.GBox.Size = new System.Drawing.Size(360, 432);
+            this.GBox.Size = new System.Drawing.Size(360, 450);
             this.GBox.TabIndex = 0;
             this.GBox.TabStop = false;
             //
@@ -119,11 +121,21 @@
             // Lbl_AwardTech
             //
             this.Lbl_AwardTech.AutoSize = false;
-            this.Lbl_AwardTech.Location = new System.Drawing.Point(8, 214);
+            this.Lbl_AwardTech.Location = new System.Drawing.Point(8, 220);
             this.Lbl_AwardTech.Name = "Lbl_AwardTech";
-            this.Lbl_AwardTech.Size = new System.Drawing.Size(344, 46);
+            this.Lbl_AwardTech.Size = new System.Drawing.Size(344, 39);
             this.Lbl_AwardTech.TabIndex = 8;
             this.Lbl_AwardTech.Text = "Modified by AwardTech\r\nIncludes additional UPS functionality, including the UPS instant-command interface.";
+            //
+            // LkLbl_AwardTech
+            //
+            this.LkLbl_AwardTech.AutoSize = true;
+            this.LkLbl_AwardTech.Location = new System.Drawing.Point(8, 256);
+            this.LkLbl_AwardTech.Name = "LkLbl_AwardTech";
+            this.LkLbl_AwardTech.Size = new System.Drawing.Size(218, 13);
+            this.LkLbl_AwardTech.TabIndex = 9;
+            this.LkLbl_AwardTech.TabStop = true;
+            this.LkLbl_AwardTech.Text = "https://github.com/AwardTech/NutDesk";
             //
             // PictureBox1
             //
@@ -136,7 +148,7 @@
             //
             // Btn_OK
             //
-            this.Btn_OK.Location = new System.Drawing.Point(157, 442);
+            this.Btn_OK.Location = new System.Drawing.Point(157, 460);
             this.Btn_OK.Name = "Btn_OK";
             this.Btn_OK.Size = new System.Drawing.Size(70, 23);
             this.Btn_OK.TabIndex = 1;
@@ -146,7 +158,7 @@
             // Label_License
             //
             this.Label_License.AutoSize = true;
-            this.Label_License.Location = new System.Drawing.Point(8, 265);
+            this.Label_License.Location = new System.Drawing.Point(8, 284);
             this.Label_License.Name = "Label_License";
             this.Label_License.Size = new System.Drawing.Size(344, 156);
             this.Label_License.TabIndex = 7;
@@ -156,7 +168,7 @@
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(368, 471);
+            this.ClientSize = new System.Drawing.Size(368, 489);
             this.Controls.Add(this.Btn_OK);
             this.Controls.Add(this.GBox);
             this.Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -178,6 +190,7 @@
         internal System.Windows.Forms.Label Lbl_AwardTech;
         internal System.Windows.Forms.Label Lbl_Github;
         internal System.Windows.Forms.Label Lbl_Sf;
+        internal System.Windows.Forms.LinkLabel LkLbl_AwardTech;
         internal System.Windows.Forms.LinkLabel LkLbl_Github;
         internal System.Windows.Forms.Button Btn_OK;
         internal System.Windows.Forms.Label Label_License;
