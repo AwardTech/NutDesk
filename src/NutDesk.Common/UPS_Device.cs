@@ -1575,9 +1575,9 @@ namespace NutDesk.Common
         /// </summary>
         public List<string> GetUPSCommands()
         {
-            if (!IsConnected)
+            if (!IsConnected || IsConnecting)
             {
-                throw new InvalidOperationException("Cannot list UPS commands while disconnected.");
+                throw new InvalidOperationException("Cannot list UPS commands until the connection is ready.");
             }
 
             try
@@ -1589,10 +1589,30 @@ namespace NutDesk.Common
                 LogFile.LogTracing("Error while listing UPS commands.", LogLvl.LOG_ERROR, this);
                 LogFile.LogException(ex, this);
 
-                if (IsTransportFailure(ex) && !IsConnected)
-                {
-                    HandleSocketBroken(null);
-                }
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Execute one of the instant commands supported by NutDesk over this device's existing NUT connection.
+        /// A returned transaction means the server accepted the request; it does not establish that a physical
+        /// operation such as a battery test has finished.
+        /// </summary>
+        public Transaction ExecuteUPSCommand(string commandName)
+        {
+            if (!IsConnected || IsConnecting)
+            {
+                throw new InvalidOperationException("Cannot execute a UPS command until the connection is ready.");
+            }
+
+            try
+            {
+                return Nut_Socket.Execute_Instant_Command(Name, commandName);
+            }
+            catch (Exception ex)
+            {
+                LogFile.LogTracing("Error while executing UPS command.", LogLvl.LOG_ERROR, this);
+                LogFile.LogException(ex, this);
 
                 throw;
             }

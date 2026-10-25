@@ -26,6 +26,9 @@
             <TextBlock Text="UPS Commands" FontSize="22" FontWeight="SemiBold" />
             <TextBlock Text="Commands advertised by the connected NUT server" Margin="0,4,0,14"
                        Foreground="{DynamicResource TextSecondaryBrush}" />
+            <TextBlock Text="Note: Instant commands may require NUT login credentials. If a command fails with an authentication error, enter your username and password in Settings → Connection, then try again."
+                       TextWrapping="Wrap" Margin="0,-8,0,14"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
             <DockPanel Margin="0,0,0,14">
                 <Button x:Name="RefreshButton" DockPanel.Dock="Right" Content="Refresh command list"
                         Padding="12,6" Click="RefreshButton_Click" />
@@ -39,9 +42,12 @@
                 <StackPanel>
                     <TextBlock Text="Battery tests" Style="{StaticResource SectionTitle}" />
                     <WrapPanel>
-                        <Button Content="Start quick battery test" IsEnabled="False" Style="{StaticResource CommandButton}" />
-                        <Button Content="Start deep battery test" IsEnabled="False" Style="{StaticResource CommandButton}" />
-                        <Button Content="Stop battery test" IsEnabled="False" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="QuickTestButton" Content="Start quick battery test" Tag="test.battery.start.quick"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="DeepTestButton" Content="Start deep battery test" Tag="test.battery.start.deep"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="StopTestButton" Content="Stop battery test" Tag="test.battery.stop"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
                     </WrapPanel>
                 </StackPanel>
             </Border>
@@ -52,10 +58,16 @@
                 <StackPanel>
                     <TextBlock Text="Beeper controls" Style="{StaticResource SectionTitle}" />
                     <WrapPanel>
-                        <Button Content="Beeper on" IsEnabled="False" Style="{StaticResource CommandButton}" />
-                        <Button Content="Beeper off" IsEnabled="False" Style="{StaticResource CommandButton}" />
-                        <Button Content="Mute beeper" IsEnabled="False" Style="{StaticResource CommandButton}" />
-                        <Button Content="Enable beeper" IsEnabled="False" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="BeeperOnButton" Content="Beeper on" Tag="beeper.on"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="BeeperOffButton" Content="Beeper off" Tag="beeper.off"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="BeeperMuteButton" Content="Mute beeper" Tag="beeper.mute"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="BeeperEnableButton" Content="Enable beeper" Tag="beeper.enable"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
+                        <Button x:Name="BeeperDisableButton" Content="Disable beeper" Tag="beeper.disable"
+                                IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
                     </WrapPanel>
                 </StackPanel>
             </Border>
@@ -77,7 +89,8 @@
             <Border Padding="14" CornerRadius="8" BorderBrush="{DynamicResource CardBorderBrush}"
                     BorderThickness="1" Background="{DynamicResource CardBrush}">
                 <StackPanel>
-                    <TextBlock Text="Commands reported by the server" Style="{StaticResource SectionTitle}" />
+                    <TextBlock x:Name="CommandListHeading" Text="Instant commands supported on UPS [—]"
+                               Style="{StaticResource SectionTitle}" />
                     <ListBox x:Name="CommandList" MinHeight="90" MaxHeight="180"
                              Background="Transparent" BorderThickness="0" />
                 </StackPanel>

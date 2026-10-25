@@ -187,6 +187,8 @@
                     </Button>
                     <Button Content="{Binding CaptionSettings}" Command="{Binding SettingsCommand}"
                             Style="{StaticResource CommandButton}" />
+                    <Button Content="{Binding CaptionUPSCommands}" Command="{Binding UPSCommandsCommand}"
+                            Style="{StaticResource CommandButton}" />
                     <!-- A click handler rather than a command: the menu is anchored to this button, and only
                          the view knows where the button is. -->
                     <Button x:Name="OverflowButton" Content="&#xE712;" Click="OnOverflowClick"

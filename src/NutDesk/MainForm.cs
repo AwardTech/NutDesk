@@ -603,6 +603,7 @@ namespace NutDesk
                 ConnectCommand = new Wpf.RelayCommand(OnDashboardConnect),
                 DisconnectCommand = new Wpf.RelayCommand(OnDashboardDisconnect),
                 SettingsCommand = new Wpf.RelayCommand(OnDashboardSettings),
+                UPSCommandsCommand = new Wpf.RelayCommand(ShowUPSCommandsWindow),
                 AppMenu = AppMenuModel
             };
 

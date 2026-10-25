@@ -867,6 +867,47 @@ namespace NutDesk.Common
         }
 
         /// <summary>
+        /// Execute one supported UPS instant command on the existing connection. A successful request returns its
+        /// transaction; an NUT ERR response follows Query_Data's NutException convention.
+        /// </summary>
+        public Transaction Execute_Instant_Command(string upsName, string commandName)
+        {
+            string[] supportedCommands =
+            {
+                "test.battery.start.quick",
+                "test.battery.start.deep",
+                "test.battery.stop",
+                "beeper.on",
+                "beeper.off",
+                "beeper.mute",
+                "beeper.enable",
+                "beeper.disable"
+            };
+
+            if (Array.IndexOf(supportedCommands, commandName) < 0)
+            {
+                throw new ArgumentException("The requested UPS instant command is not supported by NutDesk.", nameof(commandName));
+            }
+
+            string query = "INSTCMD " + upsName + " " + commandName;
+            Transaction transaction = Query_Data(query);
+            bool isPlainSuccess = transaction.SplitResponse != null &&
+                                  transaction.SplitResponse.Length == 1 &&
+                                  transaction.SplitResponse[0] == "OK";
+            bool isTrackedSuccess = transaction.SplitResponse != null &&
+                                    transaction.SplitResponse.Length == 3 &&
+                                    transaction.SplitResponse[0] == "OK" &&
+                                    transaction.SplitResponse[1] == "TRACKING" &&
+                                    !string.IsNullOrWhiteSpace(transaction.SplitResponse[2]);
+            if (transaction.ResponseType != NUTResponse.OK || (!isPlainSuccess && !isTrackedSuccess))
+            {
+                throw new InvalidDataException("The NUT server returned an unexpected response to INSTCMD.");
+            }
+
+            return transaction;
+        }
+
+        /// <summary>
         /// Pull the human readable text out of a `GET DESC` response, tolerating a missing or malformed description.
         /// A variable without a description is not a reason to abandon an entire variable listing.
         /// </summary>

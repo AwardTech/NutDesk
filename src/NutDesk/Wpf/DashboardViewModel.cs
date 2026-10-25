@@ -354,6 +354,7 @@ namespace NutDesk.Wpf
         public string CaptionConnect { get; set; } = "Connect";
         public string CaptionDisconnect { get; set; } = "Disconnect";
         public string CaptionSettings { get; set; } = "Settings";
+        public string CaptionUPSCommands { get; set; } = "UPS Commands";
         // Starts empty instead of holding an English placeholder: this one is a visible card heading, so the
         // untranslated word would show through until the shell pushes the localized caption.
         public string CaptionDevice { get; set; } = string.Empty;
@@ -373,7 +374,7 @@ namespace NutDesk.Wpf
                                          nameof(CaptionSerial), nameof(CaptionFirmware), nameof(CaptionOnLine),
                                          nameof(CaptionOnBattery), nameof(CaptionOverload), nameof(CaptionBatteryLow),
                                          nameof(CaptionConnect), nameof(CaptionDisconnect), nameof(CaptionSettings),
-                                         nameof(CaptionDevice), nameof(CaptionMoreOptions) })
+                                         nameof(CaptionUPSCommands), nameof(CaptionDevice), nameof(CaptionMoreOptions) })
             {
                 Raise(name);
             }
@@ -386,6 +387,7 @@ namespace NutDesk.Wpf
         public RelayCommand ConnectCommand { get; set; }
         public RelayCommand DisconnectCommand { get; set; }
         public RelayCommand SettingsCommand { get; set; }
+        public RelayCommand UPSCommandsCommand { get; set; }
 
         #endregion
 
