@@ -1569,6 +1569,35 @@ namespace NutDesk.Common
             return Response;
         }
 
+        /// <summary>
+        /// Return instant commands advertised by the current NUT connection. Call from a worker thread because the
+        /// network transaction can wait for the socket timeout.
+        /// </summary>
+        public List<string> GetUPSCommands()
+        {
+            if (!IsConnected)
+            {
+                throw new InvalidOperationException("Cannot list UPS commands while disconnected.");
+            }
+
+            try
+            {
+                return Nut_Socket.Query_List_Commands(Name);
+            }
+            catch (Exception ex)
+            {
+                LogFile.LogTracing("Error while listing UPS commands.", LogLvl.LOG_ERROR, this);
+                LogFile.LogException(ex, this);
+
+                if (IsTransportFailure(ex) && !IsConnected)
+                {
+                    HandleSocketBroken(null);
+                }
+
+                throw;
+            }
+        }
+
         public override string ToString()
         {
             return Name;

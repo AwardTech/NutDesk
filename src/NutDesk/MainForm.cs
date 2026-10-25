@@ -309,6 +309,7 @@ namespace NutDesk
         private readonly Dictionary<Theme.Preference, ToolStripMenuItem> ThemeMenuItems = new Dictionary<Theme.Preference, ToolStripMenuItem>();
         private ToolStripMenuItem LogMenuItem;
         private Wpf.LogWindow LogView;
+        private Wpf.UPSCommandsWindow UPSCommandsView;
 
         /// <summary>
         /// Applies the modern palette, typeface and chrome on top of the designer layout. Done in code rather than
@@ -323,6 +324,7 @@ namespace NutDesk
 
             // Built before the dashboard so the menu is complete the first time it is mirrored.
             BuildLogMenu();
+            BuildUPSCommandsMenu();
             BuildThemeMenu();
 
             EnsureDashboard();
@@ -334,6 +336,7 @@ namespace NutDesk
 
             // The log and update windows are separate top-level windows, so nothing else would repaint them.
             LogView?.ApplyPalette(Theme.IsDark);
+            UPSCommandsView?.ApplyPalette(Theme.IsDark);
             UpdateView?.ApplyPalette(Theme.IsDark);
 
             CopyCaptionsToDashboard();
@@ -426,6 +429,57 @@ namespace NutDesk
             else
             {
                 Main_Menu.Items.Add(LogMenuItem);
+            }
+        }
+
+        /// <summary>Adds the UPS command browser to the mirrored application menu.</summary>
+        private void BuildUPSCommandsMenu()
+        {
+            const string itemName = "UPS Commands";
+            if (Main_Menu.Items.OfType<ToolStripMenuItem>().Any(item => item.Text == itemName))
+            {
+                return;
+            }
+
+            var item = new ToolStripMenuItem(itemName);
+            item.Click += (sender, e) => ShowUPSCommandsWindow();
+
+            var logIndex = Main_Menu.Items.IndexOf(LogMenuItem);
+            if (logIndex >= 0)
+            {
+                Main_Menu.Items.Insert(logIndex + 1, item);
+            }
+            else
+            {
+                Main_Menu.Items.Add(item);
+            }
+        }
+
+        private void ShowUPSCommandsWindow()
+        {
+            if (UPSCommandsView != null)
+            {
+                if (UPSCommandsView.WindowState == System.Windows.WindowState.Minimized)
+                {
+                    UPSCommandsView.WindowState = System.Windows.WindowState.Normal;
+                }
+
+                UPSCommandsView.Activate();
+                return;
+            }
+
+            try
+            {
+                UPSCommandsView = new Wpf.UPSCommandsWindow(() => UPS_Device, Theme.IsDark);
+                UPSCommandsView.Closed += (s, e) => UPSCommandsView = null;
+                new System.Windows.Interop.WindowInteropHelper(UPSCommandsView).Owner = Handle;
+                UPSCommandsView.Show();
+            }
+            catch (Exception ex)
+            {
+                LogFile.LogTracing("Unable to open the UPS commands window.", LogLvl.LOG_ERROR, this);
+                LogFile.LogException(ex, this);
+                UPSCommandsView = null;
             }
         }
 
