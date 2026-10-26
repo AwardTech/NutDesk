@@ -54,7 +54,76 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\**\*.cs;bin\**\*.cs" />
+    <Compile Include="About_Gui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About_Gui.Designer.cs" />
+    <Compile Include="AutoStart.cs" />
+    <Compile Include="Controls\CProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\UPSVarGauge.Designer.cs" />
+    <Compile Include="CrashReporter.cs" />
+    <Compile Include="List_Var_Gui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="List_Var_Gui.Designer.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs" />
+    <Compile Include="Models\UpgradePrefsDialogModel.cs" />
+    <Compile Include="Notifications\EmailAccount.cs" />
+    <Compile Include="Notifications\EmailOutbox.cs" />
+    <Compile Include="Notifications\EmailSender.cs" />
+    <Compile Include="Notifications\EmailThrottle.cs" />
+    <Compile Include="Notifications\NotificationCenter.cs" />
+    <Compile Include="Notifications\NotificationEvent.cs" />
+    <Compile Include="Notifications\NotificationKind.cs" />
+    <Compile Include="Notifications\ToastChannel.cs" />
+    <Compile Include="Notifications\UpsSnapshot.cs" />
+    <Compile Include="Pref_Gui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pref_Gui.Designer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="Shutdown_Gui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shutdown_Gui.Designer.cs" />
+    <Compile Include="Theming\CardPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Theming\ModernMenuRenderer.cs" />
+    <Compile Include="Theming\Theme.cs" />
+    <Compile Include="Updating\ApplyUpdateMode.cs" />
+    <Compile Include="Updating\ReleaseNotes.cs" />
+    <Compile Include="Updating\UpdateText.cs" />
+    <Compile Include="UpgradePrefsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpgradePrefsDialog.Designer.cs" />
+    <Compile Include="Wpf\AppMenu.xaml.cs" />
+    <Compile Include="Wpf\AppMenuViewModel.cs" />
+    <Compile Include="Wpf\Dashboard.xaml.cs" />
+    <Compile Include="Wpf\DashboardViewModel.cs" />
+    <Compile Include="Wpf\LogViewModel.cs" />
+    <Compile Include="Wpf\LogWindow.xaml.cs" />
+    <Compile Include="Wpf\Palette.cs" />
+    <Compile Include="Wpf\PreferencesViewModel.cs" />
+    <Compile Include="Wpf\PreferencesWindow.xaml.cs" />
+    <Compile Include="Wpf\PrefStrings.cs" />
+    <Compile Include="Wpf\RelayCommand.cs" />
+    <Compile Include="Wpf\RingGauge.cs" />
+    <Compile Include="Wpf\UpdateViewModel.cs" />
+    <Compile Include="Wpf\UpdateWindow.xaml.cs" />
+    <Compile Include="Wpf\UPSCommandsWindow.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Wpf\Dashboard.xaml">

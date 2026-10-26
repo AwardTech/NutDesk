@@ -17,6 +17,10 @@ namespace NutDesk.Wpf
         {
             Interval = TimeSpan.FromMilliseconds(500)
         };
+        private readonly DispatcherTimer batteryTestStatusTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(2)
+        };
         private UPS_Device observedDevice;
         private UPS_Device.ConnectedEventHandler observedConnectedHandler;
         private UPS_Device.Lost_ConnectEventHandler observedLostConnectHandler;
@@ -25,8 +29,12 @@ namespace NutDesk.Wpf
         private bool isRefreshing;
         private bool commandInProgress;
         private bool refreshPending;
+        private bool batteryTestStatusPollInProgress;
+        private bool batteryTestStatusUnsupported;
         private bool isClosed;
+        private string lastBatteryTestResult;
         private string commandOutcomeNotice;
+        private string commandInProgressName;
         private int connectionGeneration;
 
         public UPSCommandsWindow(Func<UPS_Device> getDevice, bool isDark)
@@ -37,6 +45,7 @@ namespace NutDesk.Wpf
             Resources.MergedDictionaries.Insert(0, Palette.Build(isDark));
             ElementHost.EnableModelessKeyboardInterop(this);
             connectionTimer.Tick += CheckActiveDevice;
+            batteryTestStatusTimer.Tick += BatteryTestStatusTimer_Tick;
             Loaded += OnLoaded;
             Closed += OnClosed;
         }
@@ -60,6 +69,7 @@ namespace NutDesk.Wpf
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             connectionTimer.Start();
+            batteryTestStatusTimer.Start();
             BindToActiveDevice();
         }
 
@@ -69,6 +79,7 @@ namespace NutDesk.Wpf
             refreshPending = false;
             connectionGeneration++;
             connectionTimer.Stop();
+            batteryTestStatusTimer.Stop();
             ObserveDevice(null);
         }
 
@@ -100,6 +111,11 @@ namespace NutDesk.Wpf
             connectionGeneration++;
             refreshPending = false;
             commandOutcomeNotice = null;
+            batteryTestStatusUnsupported = false;
+            lastBatteryTestResult = null;
+            SetBatteryTestStatus(device == null || !device.IsConnected
+                ? "Connect to a UPS to read its battery-test status."
+                : "Checking UPS test status...", null);
             ObserveDevice(device);
             advertisedCommands.Clear();
             CommandList.Items.Clear();
@@ -173,12 +189,15 @@ namespace NutDesk.Wpf
 
                 connectionGeneration++;
                 refreshPending = false;
+                batteryTestStatusUnsupported = false;
+                lastBatteryTestResult = null;
+                SetBatteryTestStatus("UPS disconnected. Battery-test status is unavailable.", null);
                 advertisedCommands.Clear();
                 CommandList.Items.Clear();
                 if (commandInProgress)
                 {
                     commandOutcomeNotice = "The command outcome is unknown because the UPS connection was lost.";
-                    StatusText.Text = commandOutcomeNotice;
+                    GetCommandFeedbackText(commandInProgressName).Text = commandOutcomeNotice;
                 }
                 else
                 {
@@ -292,6 +311,101 @@ namespace NutDesk.Wpf
                    ReferenceEquals(device, getDevice == null ? null : getDevice());
         }
 
+        private async void BatteryTestStatusTimer_Tick(object sender, EventArgs e)
+        {
+            if (isClosed || batteryTestStatusPollInProgress || batteryTestStatusUnsupported ||
+                isRefreshing || commandInProgress)
+            {
+                return;
+            }
+
+            UPS_Device device = observedDevice;
+            if (device == null || !device.IsConnected || device.IsConnecting)
+            {
+                SetBatteryTestStatus("Connect to a UPS to read its battery-test status.", null);
+                return;
+            }
+
+            batteryTestStatusPollInProgress = true;
+            int requestGeneration = connectionGeneration;
+
+            try
+            {
+                string result = await Task.Run(() => device.GetUPSVar(new[] { "ups.test.result" }));
+                if (!IsCurrentRequest(device, requestGeneration))
+                {
+                    return;
+                }
+
+                lastBatteryTestResult = result;
+                SetBatteryTestStatus(DescribeBatteryTestResult(result), result);
+            }
+            catch (Exception ex)
+            {
+                if (!IsCurrentRequest(device, requestGeneration))
+                {
+                    return;
+                }
+
+                NutException nutException = ex as NutException;
+                if (nutException != null && nutException.LastTransaction != null &&
+                    nutException.LastTransaction.ResponseType == NUTResponse.VARNOTSUPPORTED)
+                {
+                    batteryTestStatusUnsupported = true;
+                    SetBatteryTestStatus("This UPS does not provide battery-test status.", "Unsupported");
+                }
+                else if (!device.IsConnected)
+                {
+                    SetBatteryTestStatus("UPS connection lost. Battery-test status is unavailable.", null);
+                }
+                else
+                {
+                    // Keep the last good result visible if a single telemetry read fails.
+                    SetBatteryTestStatus(lastBatteryTestResult == null
+                        ? "Unable to read battery-test status."
+                        : DescribeBatteryTestResult(lastBatteryTestResult), lastBatteryTestResult);
+                }
+            }
+            finally
+            {
+                batteryTestStatusPollInProgress = false;
+            }
+        }
+
+        private void SetBatteryTestStatus(string message, string rawResult)
+        {
+            BatteryTestStatusText.Text = message;
+            BatteryTestRawResultText.Text = string.IsNullOrWhiteSpace(rawResult)
+                ? "NUT result: —"
+                : "NUT result: " + rawResult;
+        }
+
+        private static string DescribeBatteryTestResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return "The UPS returned an empty battery-test result.";
+            }
+
+            switch (result.Trim())
+            {
+                case "TestInProgress":
+                    return "Battery self-test in progress.";
+                case "Done and passed":
+                    return "Battery self-test completed successfully.";
+                case "Aborted":
+                    return "Battery self-test aborted.";
+                case "Done and failed":
+                    return "Battery self-test failed.";
+                case "No battery":
+                    return "Battery self-test unavailable: no battery detected.";
+                case "Invalid test":
+                    return "The UPS reported an invalid battery-test request.";
+                default:
+                    return "Battery-test result: " + result;
+            }
+        }
+
         private void UpdateCommandListHeading(UPS_Device device)
         {
             string upsName = device == null || string.IsNullOrWhiteSpace(device.Name) ? "—" : device.Name;
@@ -352,15 +466,18 @@ namespace NutDesk.Wpf
                 !ReferenceEquals(device, getDevice == null ? null : getDevice()) || !device.IsConnected ||
                 !advertisedCommands.Contains(command))
             {
-                StatusText.Text = "The UPS connection or advertised commands changed. Refresh the command list.";
+                GetCommandFeedbackText(command).Text =
+                    "The UPS connection or advertised commands changed. Refresh the command list.";
                 UpdateCommandButtons();
                 return;
             }
 
             commandInProgress = true;
+            commandInProgressName = command;
             commandOutcomeNotice = null;
             UpdateCommandButtons();
-            StatusText.Text = string.Format("Sending '{0}' to UPS [{1}]...", command, upsName);
+            System.Windows.Controls.TextBlock feedbackText = GetCommandFeedbackText(command);
+            feedbackText.Text = string.Format("Sending '{0}' to UPS [{1}]...", command, upsName);
             try
             {
                 Transaction transaction = await Task.Run(() => device.ExecuteUPSCommand(command));
@@ -371,13 +488,13 @@ namespace NutDesk.Wpf
 
                 if (command.StartsWith("test.battery.", StringComparison.Ordinal))
                 {
-                    StatusText.Text = string.Format(
-                        "The NUT server accepted '{0}' for UPS [{1}].{2} Acceptance does not confirm that the battery test completed.",
+                    feedbackText.Text = string.Format(
+                        "NUT acknowledged '{0}' for UPS [{1}].{2}\nAcknowledgement does not confirm that the battery test completed.",
                         command, upsName, TrackingAcknowledgement(transaction));
                 }
                 else
                 {
-                    StatusText.Text = string.Format("The NUT server accepted '{0}' for UPS [{1}].{2}",
+                    feedbackText.Text = string.Format("NUT acknowledged '{0}' for UPS [{1}].{2}",
                                                     command, upsName, TrackingAcknowledgement(transaction));
                 }
             }
@@ -391,22 +508,41 @@ namespace NutDesk.Wpf
 
                     if (device.IsConnected)
                     {
-                        StatusText.Text = "Command failed: " + ex.Message + " Refresh the command list before trying again.";
+                        GetCommandFeedbackText(command).Text =
+                            "Command failed: " + ex.Message + " Refresh the command list before trying again.";
                     }
                     else
                     {
                         commandOutcomeNotice = "The command outcome is unknown because the UPS connection was lost.";
-                        StatusText.Text = string.Format("Command failed while sending '{0}'. {1}", command,
-                                                        commandOutcomeNotice);
+                        GetCommandFeedbackText(command).Text = string.Format("Command failed while sending '{0}'. {1}", command,
+                                                                             commandOutcomeNotice);
                     }
                 }
             }
             finally
             {
                 commandInProgress = false;
+                commandInProgressName = null;
                 UpdateCommandButtons();
                 StartPendingRefreshIfNeeded();
             }
+        }
+
+        private System.Windows.Controls.TextBlock GetCommandFeedbackText(string command)
+        {
+            if (!string.IsNullOrEmpty(command) &&
+                command.StartsWith("test.battery.", StringComparison.Ordinal))
+            {
+                return BatteryCommandFeedbackText;
+            }
+
+            if (!string.IsNullOrEmpty(command) &&
+                command.StartsWith("beeper.", StringComparison.Ordinal))
+            {
+                return BeeperCommandFeedbackText;
+            }
+
+            return PowerCommandFeedbackText;
         }
 
         private static string TrackingAcknowledgement(Transaction transaction)

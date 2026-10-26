@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -576,6 +576,7 @@ namespace NutDesk
         private Wpf.Dashboard DashboardView;
         private Wpf.DashboardViewModel DashboardModel;
         private Wpf.AppMenuViewModel AppMenuModel;
+        private const string AwardTechDisplayName = "NutDesk [AwardTech]";
 
         /// <summary>
         /// Replace the designer's control grid with the WPF dashboard, once.
@@ -599,7 +600,7 @@ namespace NutDesk
 
             DashboardModel = new Wpf.DashboardViewModel
             {
-                AppTitle = AppGlobals.ProgramName,
+                AppTitle = AwardTechDisplayName,
                 ConnectCommand = new Wpf.RelayCommand(OnDashboardConnect),
                 DisconnectCommand = new Wpf.RelayCommand(OnDashboardDisconnect),
                 SettingsCommand = new Wpf.RelayCommand(OnDashboardSettings),
@@ -1056,12 +1057,12 @@ namespace NutDesk
                 }
                 else
                 {
-                    Text = ProgramName;
+                    Text = AwardTechDisplayName;
                 }
             }
             else if (form.WindowState == FormWindowState.Maximized || form.WindowState == FormWindowState.Normal)
             {
-                Text = ProgramName;
+                Text = AwardTechDisplayName;
             }
         }
 
@@ -1621,7 +1622,7 @@ namespace NutDesk
         {
             string ShowVersion = ShortProgramVersion;
             string NotifyStr = ProgramName + " - " + ShowVersion + Environment.NewLine;
-            string FormText = ProgramName;
+            string FormText = AwardTechDisplayName;
             switch (Reason)
             {
                 // VB's Select Case on a String matches "" against Case Nothing as well, so both are listed here.
@@ -1710,7 +1711,7 @@ namespace NutDesk
             }
             else
             {
-                Text = ProgramName;
+                Text = AwardTechDisplayName;
             }
             this.FormText = FormText;
 

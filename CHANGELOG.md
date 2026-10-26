@@ -4,6 +4,24 @@ All notable changes to NutDesk are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and NutDesk uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-26
+
+AwardTech fork release. The upstream NutDesk project and its copyright/licence notices are retained.
+
+### Added
+
+- AwardTech branding in the main window title and dashboard heading.
+- UPS Commands window, including battery-test status and per-category command feedback, carried forward from the AwardTech development branch.
+
+### Changed
+
+- The in-app updater and README release links point to the AwardTech/NutDesk fork so users receive the fork's releases.
+- Version metadata updated to 1.1.0.
+
+### Notes
+
+- Power Controls remain disabled in this release; command execution and its safety confirmation dialog are planned for v1.2.0.
+
 ## [1.0.0] - 2026-09-21
 
 First release of NutDesk. Changes are relative to
@@ -64,4 +82,5 @@ First release of NutDesk. Changes are relative to
 - "Verify Update" in the tray icon's menu, which did nothing.
 - A failed update check reported as "no update available" and not tried again for a whole interval.
 
+[1.1.0]: https://github.com/AwardTech/NutDesk/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kriseniprak/NutDesk/releases/tag/v1.0.0

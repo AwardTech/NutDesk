@@ -49,6 +49,21 @@
                         <Button x:Name="StopTestButton" Content="Stop battery test" Tag="test.battery.stop"
                                 IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
                     </WrapPanel>
+                    <Border Margin="0,2,0,10" Padding="10,8" CornerRadius="6"
+                            BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+                            Background="{DynamicResource WindowBrush}">
+                        <StackPanel>
+                            <TextBlock Text="Battery Test Status" FontWeight="SemiBold" Margin="0,0,0,3" />
+                            <TextBlock x:Name="BatteryTestStatusText" Text="Checking UPS test status..."
+                                       TextWrapping="Wrap" />
+                            <TextBlock x:Name="BatteryTestRawResultText" Text="NUT result: —"
+                                       FontSize="11" Margin="0,3,0,0"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="Command feedback" FontWeight="SemiBold" Margin="0,0,0,4" />
+                    <TextBlock x:Name="BatteryCommandFeedbackText" Text="No battery-test command sent in this session."
+                               TextWrapping="Wrap" Margin="0,0,0,2" />
                 </StackPanel>
             </Border>
 
@@ -69,6 +84,9 @@
                         <Button x:Name="BeeperDisableButton" Content="Disable beeper" Tag="beeper.disable"
                                 IsEnabled="False" Click="InstantCommand_Click" Style="{StaticResource CommandButton}" />
                     </WrapPanel>
+                    <TextBlock Text="Command feedback" FontWeight="SemiBold" Margin="0,4,0,4" />
+                    <TextBlock x:Name="BeeperCommandFeedbackText" Text="No beeper command sent in this session."
+                               TextWrapping="Wrap" Margin="0,0,0,2" />
                 </StackPanel>
             </Border>
 
@@ -83,6 +101,9 @@
                         <Button Content="shutdown.reboot" IsEnabled="False" ToolTip="Not yet implemented" Style="{StaticResource CommandButton}" />
                         <Button Content="shutdown.stop" IsEnabled="False" ToolTip="Not yet implemented" Style="{StaticResource CommandButton}" />
                     </WrapPanel>
+                    <TextBlock Text="Command feedback" FontWeight="SemiBold" Margin="0,4,0,4" />
+                    <TextBlock x:Name="PowerCommandFeedbackText" Text="No power command sent in this session."
+                               TextWrapping="Wrap" Margin="0,0,0,2" />
                 </StackPanel>
             </Border>
 
