@@ -32,6 +32,8 @@ the battery gets too low or when the server asks every client to go down.
 - **Automatic shutdown** on battery charge or runtime limits, or on a forced shutdown (FSD) from the server.
 - **Event log window** with severity filters, search and an "important events" view.
 - **Automatic reconnection** when the NUT server restarts or the network drops.
+- **UPS Commands** with battery-test, beeper and power controls, server-reported beeper status, and a list of commands advertised by the connected NUT server.
+- **Unsupported-variable detection** that remembers variables the UPS does not provide and lets you clear the list to rediscover capabilities.
 - **Updates from within the app**: new versions are found on GitHub, checked against their published SHA-256
   and installed in place, with an automatic restart.
 - **Portable**: no installer, no administrator rights; unzip and run.

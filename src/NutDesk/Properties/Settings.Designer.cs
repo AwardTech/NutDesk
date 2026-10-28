@@ -409,6 +409,15 @@ namespace NutDesk.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NUT_UnsupportedVariables
+        {
+            get { return ((string)(this["NUT_UnsupportedVariables"])); }
+            set { this["NUT_UnsupportedVariables"] = value; }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool NUT_AutoReconnect
         {

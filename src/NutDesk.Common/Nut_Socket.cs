@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
@@ -881,7 +881,11 @@ namespace NutDesk.Common
                 "beeper.off",
                 "beeper.mute",
                 "beeper.enable",
-                "beeper.disable"
+                "beeper.disable",
+                "load.off",
+                "load.off.delay",
+                "shutdown.reboot",
+                "shutdown.stop"
             };
 
             if (Array.IndexOf(supportedCommands, commandName) < 0)

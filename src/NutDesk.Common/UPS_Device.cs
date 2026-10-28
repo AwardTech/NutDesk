@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
@@ -19,6 +20,87 @@ namespace NutDesk.Common
     /// </remarks>
     public class UPS_Device : IDisposable
     {
+        #region Unsupported-variable persistence
+        // The UI assembly supplies these delegates so the common library can persist discoveries in the existing
+        // per-user application settings without depending on the UI assembly.
+        public static Func<string> ReadUnsupportedVariablesSetting;
+        public static Action<string> WriteUnsupportedVariablesSetting;
+        private static readonly object UnsupportedVariablesLock = new object();
+        private static readonly Dictionary<string, int> UnsupportedVariableFailures = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        private static HashSet<string> ReadUnsupportedVariableKeys()
+        {
+            lock (UnsupportedVariablesLock)
+            {
+                string stored = ReadUnsupportedVariablesSetting == null ? string.Empty : ReadUnsupportedVariablesSetting();
+                return new HashSet<string>((stored ?? string.Empty).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries), StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        private string UnsupportedVariableKey(string variable)
+        {
+            string host = Nut_Config == null ? string.Empty : Nut_Config.Host;
+            int port = Nut_Config == null ? 0 : Nut_Config.Port;
+            string ups = Nut_Config == null ? string.Empty : Nut_Config.UPSName;
+            return host + ":" + port.ToString(CultureInfo.InvariantCulture) + "/" + ups + "|" + variable;
+        }
+
+        public List<string> GetUnsupportedVariablesForCurrentUPS()
+        {
+            string prefix = (Nut_Config == null ? string.Empty : Nut_Config.Host) + ":" +
+                (Nut_Config == null ? 0 : Nut_Config.Port).ToString(CultureInfo.InvariantCulture) + "/" + Name + "|";
+            return ReadUnsupportedVariableKeys().Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                .Select(k => k.Substring(prefix.Length)).OrderBy(v => v, StringComparer.OrdinalIgnoreCase).ToList();
+        }
+
+        public void ClearUnsupportedVariablesForCurrentUPS()
+        {
+            string prefix = (Nut_Config == null ? string.Empty : Nut_Config.Host) + ":" +
+                (Nut_Config == null ? 0 : Nut_Config.Port).ToString(CultureInfo.InvariantCulture) + "/" + Name + "|";
+            lock (UnsupportedVariablesLock)
+            {
+                var keys = ReadUnsupportedVariableKeys();
+                keys.RemoveWhere(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
+                UnsupportedVariableFailures.Keys.Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)).ToList()
+                    .ForEach(k => UnsupportedVariableFailures.Remove(k));
+                if (WriteUnsupportedVariablesSetting != null) WriteUnsupportedVariablesSetting(string.Join(";", keys));
+            }
+        }
+
+        private static bool IsUnsupportedVariableCached(string key)
+        {
+            return ReadUnsupportedVariableKeys().Contains(key);
+        }
+
+        private static int UnsupportedVariableFailureCount(string key)
+        {
+            lock (UnsupportedVariablesLock)
+            {
+                int count;
+                return UnsupportedVariableFailures.TryGetValue(key, out count) ? count : 3;
+            }
+        }
+
+        private void RecordUnsupportedVariable(string key, string variable)
+        {
+            lock (UnsupportedVariablesLock)
+            {
+                if (ReadUnsupportedVariableKeys().Contains(key)) return;
+                int attempts;
+                UnsupportedVariableFailures.TryGetValue(key, out attempts);
+                attempts++;
+                UnsupportedVariableFailures[key] = attempts;
+                if (attempts < 3) return;
+
+                var keys = ReadUnsupportedVariableKeys();
+                if (keys.Add(key) && WriteUnsupportedVariablesSetting != null)
+                    WriteUnsupportedVariablesSetting(string.Join(";", keys));
+                UnsupportedVariableFailures.Remove(key);
+                LogFile.LogTracing(variable + " confirmed unsupported after 3 consecutive responses; skipping future polls.", LogLvl.LOG_NOTICE, this);
+            }
+        }
+        #endregion
+
         #region Statics/Defaults
         private readonly CultureInfo INVARIANT_CULTURE = CultureInfo.InvariantCulture;
         private const double POWER_FACTOR = 0.8;
@@ -1409,6 +1491,12 @@ namespace NutDesk.Common
             // Try each variable in the array sequentially
             foreach (string varName in varNames)
             {
+                string unsupportedKey = UnsupportedVariableKey(varName);
+                if (IsUnsupportedVariableCached(unsupportedKey))
+                {
+                    continue;
+                }
+
                 try
                 {
                     LogFile.LogTracing("Trying variable: " + varName, LogLvl.LOG_DEBUG, this);
@@ -1418,6 +1506,11 @@ namespace NutDesk.Common
                     {
                         // Extract the variable value from the response.
                         var response = Nut_Query.SplitResponse[3].Trim('"');
+                        lock (UnsupportedVariablesLock)
+                        {
+                            // A successful response breaks the consecutive-unsupported sequence.
+                            UnsupportedVariableFailures.Remove(unsupportedKey);
+                        }
                         LogFile.LogTracing("Returning good response: " + response, LogLvl.LOG_DEBUG, this);
                         return response;
                     }
@@ -1447,8 +1540,13 @@ namespace NutDesk.Common
                         // a C# "break" inside a switch section would only leave the switch.
                         if (nutEx.LastTransaction.ResponseType == NUTResponse.VARNOTSUPPORTED)
                         {
-                            LogFile.LogTracing(varName + " is not supported by server, trying next", LogLvl.LOG_WARNING, this);
-                            // Continue to next variable
+                            RecordUnsupportedVariable(unsupportedKey, varName);
+                            if (!IsUnsupportedVariableCached(unsupportedKey))
+                            {
+                                LogFile.LogTracing(varName + " is not supported by server (confirmation " +
+                                    UnsupportedVariableFailureCount(unsupportedKey).ToString(CultureInfo.InvariantCulture) + " of 3).", LogLvl.LOG_WARNING, this);
+                            }
+                            // Continue to the next alternative. Once confirmed three times, this variable is skipped.
                             continue;
                         }
                         else if (nutEx.LastTransaction.ResponseType == NUTResponse.DATASTALE)
@@ -1492,6 +1590,12 @@ namespace NutDesk.Common
                         break;
                     }
                 }
+            }
+
+            if (lastException == null && varNames.All(v => IsUnsupportedVariableCached(UnsupportedVariableKey(v))))
+            {
+                // Every candidate is known to be unsupported. Do not emit repeated fallback/error messages.
+                return string.IsNullOrEmpty(Convert.ToString(Fallback_value)) ? null : Convert.ToString(Fallback_value);
             }
 
             LogFile.LogTracing("Unable to get any UPS variable.", LogLvl.LOG_ERROR, this);

@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms.Integration;
+using System.Windows.Media;
 using System.Windows.Threading;
 using NutDesk.Common;
 
@@ -21,6 +22,10 @@ namespace NutDesk.Wpf
         {
             Interval = TimeSpan.FromSeconds(2)
         };
+        private readonly DispatcherTimer beeperStatusTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(2)
+        };
         private UPS_Device observedDevice;
         private UPS_Device.ConnectedEventHandler observedConnectedHandler;
         private UPS_Device.Lost_ConnectEventHandler observedLostConnectHandler;
@@ -31,6 +36,7 @@ namespace NutDesk.Wpf
         private bool refreshPending;
         private bool batteryTestStatusPollInProgress;
         private bool batteryTestStatusUnsupported;
+        private bool beeperStatusPollInProgress;
         private bool isClosed;
         private string lastBatteryTestResult;
         private string commandOutcomeNotice;
@@ -46,6 +52,7 @@ namespace NutDesk.Wpf
             ElementHost.EnableModelessKeyboardInterop(this);
             connectionTimer.Tick += CheckActiveDevice;
             batteryTestStatusTimer.Tick += BatteryTestStatusTimer_Tick;
+            beeperStatusTimer.Tick += BeeperStatusTimer_Tick;
             Loaded += OnLoaded;
             Closed += OnClosed;
         }
@@ -70,7 +77,9 @@ namespace NutDesk.Wpf
         {
             connectionTimer.Start();
             batteryTestStatusTimer.Start();
+            beeperStatusTimer.Start();
             BindToActiveDevice();
+            RefreshUnsupportedVariablesList();
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -80,6 +89,7 @@ namespace NutDesk.Wpf
             connectionGeneration++;
             connectionTimer.Stop();
             batteryTestStatusTimer.Stop();
+            beeperStatusTimer.Stop();
             ObserveDevice(null);
         }
 
@@ -123,6 +133,7 @@ namespace NutDesk.Wpf
                 ? "Connect to a UPS to load its command list."
                 : "Connected. Retrieving command list...";
             UpdateCommandButtons();
+            RefreshUnsupportedVariablesList();
 
             if (device != null && device.IsConnected && !device.IsConnecting)
             {
@@ -173,6 +184,7 @@ namespace NutDesk.Wpf
                 advertisedCommands.Clear();
                 UpdateCommandListHeading(source);
                 UpdateCommandButtons();
+                RefreshUnsupportedVariablesList();
                 _ = LoadCommandsAsync();
             });
         }
@@ -204,6 +216,7 @@ namespace NutDesk.Wpf
                     StatusText.Text = "UPS disconnected. Command buttons are disabled.";
                 }
                 UpdateCommandButtons();
+                RefreshUnsupportedVariablesList();
             });
         }
 
@@ -311,6 +324,72 @@ namespace NutDesk.Wpf
                    ReferenceEquals(device, getDevice == null ? null : getDevice());
         }
 
+        private string lastConfirmedBeeperStatus;
+
+        private async void BeeperStatusTimer_Tick(object sender, EventArgs e)
+        {
+            if (isClosed || beeperStatusPollInProgress || isRefreshing || commandInProgress) return;
+            UPS_Device device = observedDevice;
+            if (device == null || !device.IsConnected || device.IsConnecting) return;
+
+            beeperStatusPollInProgress = true;
+            int requestGeneration = connectionGeneration;
+            try
+            {
+                string result = await Task.Run(() => device.GetUPSVar("ups.beeper.status"));
+                if (!IsCurrentRequest(device, requestGeneration) || string.IsNullOrWhiteSpace(result)) return;
+                string status = result.Trim();
+                if (string.Equals(status, "enabled", StringComparison.OrdinalIgnoreCase))
+                {
+                    lastConfirmedBeeperStatus = "Enabled";
+                    BeeperStatusText.Text = lastConfirmedBeeperStatus;
+                    BeeperStatusText.Foreground = Brushes.White;
+                    BeeperStatusBadge.Background = new SolidColorBrush(Color.FromRgb(25, 135, 84));
+                }
+                else if (string.Equals(status, "disabled", StringComparison.OrdinalIgnoreCase))
+                {
+                    lastConfirmedBeeperStatus = "Disabled";
+                    BeeperStatusText.Text = lastConfirmedBeeperStatus;
+                    BeeperStatusBadge.Background = new SolidColorBrush(Color.FromRgb(255, 193, 7));
+                    BeeperStatusText.Foreground = new SolidColorBrush(Color.FromRgb(33, 37, 41));
+                }
+            }
+            catch
+            {
+                // Keep the last server-confirmed status and colour. Never infer status from a command click.
+            }
+            finally
+            {
+                beeperStatusPollInProgress = false;
+                RefreshUnsupportedVariablesList();
+            }
+        }
+
+        private void RefreshUnsupportedVariablesList()
+        {
+            UnsupportedVariablesList.Items.Clear();
+            UPS_Device device = observedDevice;
+            if (device == null)
+            {
+                UnsupportedVariablesList.Items.Add("Connect to a UPS to view unsupported variables.");
+                ClearUnsupportedVariablesButton.IsEnabled = false;
+                return;
+            }
+
+            List<string> variables = device.GetUnsupportedVariablesForCurrentUPS();
+            foreach (string variable in variables) UnsupportedVariablesList.Items.Add(variable);
+            if (variables.Count == 0) UnsupportedVariablesList.Items.Add("None identified.");
+            ClearUnsupportedVariablesButton.IsEnabled = variables.Count > 0;
+        }
+
+        private void ClearUnsupportedVariablesButton_Click(object sender, RoutedEventArgs e)
+        {
+            UPS_Device device = observedDevice;
+            if (device == null) return;
+            device.ClearUnsupportedVariablesForCurrentUPS();
+            RefreshUnsupportedVariablesList();
+        }
+
         private async void BatteryTestStatusTimer_Tick(object sender, EventArgs e)
         {
             if (isClosed || batteryTestStatusPollInProgress || batteryTestStatusUnsupported ||
@@ -408,8 +487,8 @@ namespace NutDesk.Wpf
 
         private void UpdateCommandListHeading(UPS_Device device)
         {
-            string upsName = device == null || string.IsNullOrWhiteSpace(device.Name) ? "—" : device.Name;
-            CommandListHeading.Text = string.Format("Instant commands supported on UPS [{0}]", upsName);
+            // Keep the compact two-column panel heading independent of the active UPS name.
+            CommandListHeading.Text = "Supported Instant Commands";
         }
 
         private string AddCommandOutcomeNotice(string status)
@@ -453,11 +532,25 @@ namespace NutDesk.Wpf
             string action = Convert.ToString(button.Content);
             string upsName = device.Name;
             int commandGeneration = connectionGeneration;
-            var answer = MessageBox.Show(this,
-                string.Format("Do you want to {0} on UPS '{1}'?", action, upsName),
-                "Confirm UPS command", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            bool isPowerCommand = IsPowerCommand(command);
+            string confirmationMessage = isPowerCommand
+                ? string.Format(
+                    "This command may interrupt power to devices and appliances connected to the UPS. As a consequence, unsaved work may be lost and data may be corrupted.\n\nCommand: {0}\nUPS: {1}\n\nAre you sure you want to continue?",
+                    command, upsName)
+                : string.Format("Do you want to {0} on UPS '{1}'?", action, upsName);
+
+            MessageBoxResult answer = MessageBox.Show(this,
+                confirmationMessage,
+                isPowerCommand ? "Confirm UPS power command" : "Confirm UPS command",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning,
+                MessageBoxResult.No);
             if (answer != MessageBoxResult.Yes)
             {
+                if (isPowerCommand)
+                {
+                    PowerCommandFeedbackText.Text = "Power command cancelled. No command was sent to the UPS.";
+                }
                 return;
             }
 
@@ -528,6 +621,20 @@ namespace NutDesk.Wpf
             }
         }
 
+        private static bool IsPowerCommand(string command)
+        {
+            switch (command)
+            {
+                case "load.off":
+                case "load.off.delay":
+                case "shutdown.reboot":
+                case "shutdown.stop":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         private System.Windows.Controls.TextBlock GetCommandFeedbackText(string command)
         {
             if (!string.IsNullOrEmpty(command) &&
@@ -568,6 +675,10 @@ namespace NutDesk.Wpf
             BeeperMuteButton.IsEnabled = canExecute && advertisedCommands.Contains("beeper.mute");
             BeeperEnableButton.IsEnabled = canExecute && advertisedCommands.Contains("beeper.enable");
             BeeperDisableButton.IsEnabled = canExecute && advertisedCommands.Contains("beeper.disable");
+            LoadOffButton.IsEnabled = canExecute && advertisedCommands.Contains("load.off");
+            LoadOffDelayButton.IsEnabled = canExecute && advertisedCommands.Contains("load.off.delay");
+            ShutdownRebootButton.IsEnabled = canExecute && advertisedCommands.Contains("shutdown.reboot");
+            ShutdownStopButton.IsEnabled = canExecute && advertisedCommands.Contains("shutdown.stop");
         }
     }
 }

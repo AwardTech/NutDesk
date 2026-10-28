@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -124,6 +124,12 @@ namespace NutDesk
 
         public MainForm()
         {
+            UPS_Device.ReadUnsupportedVariablesSetting = () => Properties.Settings.Default.NUT_UnsupportedVariables;
+            UPS_Device.WriteUnsupportedVariablesSetting = value =>
+            {
+                Properties.Settings.Default.NUT_UnsupportedVariables = value ?? string.Empty;
+                Properties.Settings.Default.Save();
+            };
             InitializeComponent();
             WireEvents();
         }
