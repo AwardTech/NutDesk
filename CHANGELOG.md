@@ -4,6 +4,42 @@ All notable changes to NutDesk are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and NutDesk uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-10-28
+
+AwardTech release focused on UPS command controls and clearer reporting of the connected UPS capabilities.
+
+### Added
+
+- Power Controls for advertised NUT instant commands, with an explicit safety confirmation that defaults to **No** before potentially disruptive commands are sent.
+- Live Beeper Status indicator driven only by the server-reported `ups.beeper.status` value.
+- Persistent caching of variables explicitly reported as unsupported after three consecutive responses, reducing unnecessary polling and repeated warnings.
+- Unsupported Variables list in the UPS Commands window, with a Clear list action to rediscover UPS capabilities.
+
+### Changed
+
+- Reorganised the UPS Commands window into compact controls and side-by-side Supported Instant Commands and Unsupported Variables panels.
+- Kept command availability tied to the commands advertised by the connected NUT server.
+- Updated version metadata to 1.2.0.
+
+### Fixed
+
+- Avoid repeated polling of variables known to be unsupported by the connected UPS.
+- Kept the Beeper Status indicator authoritative to the NUT server rather than changing it optimistically after a button click.
+
+## [1.1.0] - 2026-10-26
+
+AwardTech fork release. The upstream NutDesk project and its copyright/licence notices are retained.
+
+### Added
+
+- AwardTech branding in the main window title and dashboard heading.
+- UPS Commands window, including battery-test status and per-category command feedback, carried forward from the AwardTech development branch.
+
+### Changed
+
+- The in-app updater and README release links point to the AwardTech/NutDesk fork so users receive the fork's releases.
+- Version metadata updated to 1.1.0.
+
 ## [1.0.0] - 2026-09-21
 
 First release of NutDesk. Changes are relative to
@@ -64,4 +100,6 @@ First release of NutDesk. Changes are relative to
 - "Verify Update" in the tray icon's menu, which did nothing.
 - A failed update check reported as "no update available" and not tried again for a whole interval.
 
+[1.2.0]: https://github.com/AwardTech/NutDesk/releases/tag/v1.2.0
+[1.1.0]: https://github.com/AwardTech/NutDesk/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kriseniprak/NutDesk/releases/tag/v1.0.0

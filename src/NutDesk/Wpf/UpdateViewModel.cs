@@ -189,7 +189,7 @@ namespace NutDesk.Wpf
 
         public string WindowTitle => Properties.Resources.UpdateWindow_Title;
 
-        /// <summary>"NutDesk 1.1.0 is available".</summary>
+        /// <summary>"NutDesk 1.2.0 is available".</summary>
         public string Heading => UpdateText.Format(Properties.Resources.UpdateWindow_Heading, update.VersionText);
 
         /// <summary>"You have version 1.0.0 · Released on ...".</summary>

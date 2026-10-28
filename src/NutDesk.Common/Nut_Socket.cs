@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
@@ -499,12 +499,14 @@ namespace NutDesk.Common
         /// This likely indicates that the server closed the connection.</exception>
         public Transaction Query_Data(string Query_Msg)
         {
+            string diagnosticQuery = GetDiagnosticQuery(Query_Msg);
+
             // The lock spans the whole exchange: a query must never be interleaved with another query's response.
             lock (streamLock)
             {
                 if (!ConnectionStatus)
                 {
-                    throw new InvalidOperationException("Attempted to send query " + Query_Msg + " while disconnected.");
+                    throw new InvalidOperationException("Attempted to send query " + diagnosticQuery + " while disconnected.");
                 }
 
                 try
@@ -529,8 +531,21 @@ namespace NutDesk.Common
                     OnSocketBroken(ex);
                 }
 
-                return ParseResponse(Query_Msg, response);
+                return ParseResponse(diagnosticQuery, response);
             }
+        }
+
+        /// <summary>
+        /// Remove credential material from protocol diagnostics before it can be attached to an exception.
+        /// </summary>
+        private static string GetDiagnosticQuery(string query)
+        {
+            if (query != null && query.StartsWith("PASSWORD ", StringComparison.OrdinalIgnoreCase))
+            {
+                return "PASSWORD [redacted]";
+            }
+
+            return query;
         }
 
         /// <summary>
@@ -778,6 +793,122 @@ namespace NutDesk.Common
             }
 
             return List_Result;
+        }
+
+        /// <summary>
+        /// Retrieve command names advertised for the UPS. The entire multiline response is read while holding the
+        /// same lock as single-line transactions, so it cannot consume a poll's response or be interleaved with it.
+        /// </summary>
+        public List<string> Query_List_Commands(string upsName)
+        {
+            string query = "LIST CMD " + upsName;
+            var commands = new List<string>();
+
+            lock (streamLock)
+            {
+                if (!ConnectionStatus)
+                {
+                    throw new InvalidOperationException("Attempted to list commands while disconnected.");
+                }
+
+                try
+                {
+                    SendQuery(query);
+                    string firstLine = ReadResponseLine();
+                    if (firstLine == null)
+                    {
+                        throw new EndOfStreamException("Server terminated connection before the LIST CMD response.");
+                    }
+
+                    var begin = ParseResponse(query, firstLine);
+                    if (begin.ResponseType != NUTResponse.BEGINLIST || begin.SplitResponse.Length < 4 ||
+                        begin.SplitResponse[1] != "LIST" || begin.SplitResponse[2] != "CMD" ||
+                        begin.SplitResponse[3] != upsName)
+                    {
+                        throw new InvalidDataException("The NUT server returned an invalid LIST CMD header.");
+                    }
+
+                    while (true)
+                    {
+                        string line = ReadResponseLine();
+                        if (line == null)
+                        {
+                            throw new EndOfStreamException("Server terminated connection during LIST CMD response.");
+                        }
+
+                        if (line == "END LIST CMD " + upsName)
+                        {
+                            break;
+                        }
+
+                        string[] parts = line.Split(new[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length != 3 || parts[0] != "CMD" || parts[1] != upsName)
+                        {
+                            throw new InvalidDataException("The NUT server returned an invalid LIST CMD entry.");
+                        }
+
+                        commands.Add(parts[2]);
+                    }
+                }
+                catch (NutException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    OnSocketBroken(ex);
+                    // OnSocketBroken is expected to throw when given an exception. Keep this explicit so a future
+                    // change to that helper cannot let this method return the commands collected so far.
+                    throw;
+                }
+            }
+
+            return commands;
+        }
+
+        /// <summary>
+        /// Execute one supported UPS instant command on the existing connection. A successful request returns its
+        /// transaction; an NUT ERR response follows Query_Data's NutException convention.
+        /// </summary>
+        public Transaction Execute_Instant_Command(string upsName, string commandName)
+        {
+            string[] supportedCommands =
+            {
+                "test.battery.start.quick",
+                "test.battery.start.deep",
+                "test.battery.stop",
+                "beeper.on",
+                "beeper.off",
+                "beeper.mute",
+                "beeper.enable",
+                "beeper.disable",
+                "load.off",
+                "load.off.delay",
+                "shutdown.reboot",
+                "shutdown.stop"
+            };
+
+            if (Array.IndexOf(supportedCommands, commandName) < 0)
+            {
+                throw new ArgumentException("The requested UPS instant command is not supported by NutDesk.", nameof(commandName));
+            }
+
+            string query = "INSTCMD " + upsName + " " + commandName;
+            Transaction transaction = Query_Data(query);
+            bool isPlainSuccess = transaction.SplitResponse != null &&
+                                  transaction.SplitResponse.Length == 1 &&
+                                  transaction.SplitResponse[0] == "OK";
+            bool isTrackedSuccess = transaction.SplitResponse != null &&
+                                    transaction.SplitResponse.Length == 3 &&
+                                    transaction.SplitResponse[0] == "OK" &&
+                                    transaction.SplitResponse[1] == "TRACKING" &&
+                                    !string.IsNullOrWhiteSpace(transaction.SplitResponse[2]);
+            if (transaction.ResponseType != NUTResponse.OK || (!isPlainSuccess && !isTrackedSuccess))
+            {
+                throw new InvalidDataException("The NUT server returned an unexpected response to INSTCMD.");
+            }
+
+            return transaction;
         }
 
         /// <summary>

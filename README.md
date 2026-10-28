@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="NutDesk" width="128" height="128">
 </p>
 
-<h1 align="center">NutDesk</h1>
+<h1 align="center">NutDesk [AwardTech]</h1>
 
 <p align="center">
   A Windows desktop client for <a href="https://networkupstools.org/">Network UPS Tools</a>.<br>
@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/kriseniprak/NutDesk/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/kriseniprak/NutDesk"></a>
-  <a href="https://github.com/kriseniprak/NutDesk/actions/workflows/build.yml"><img alt="Build" src="https://github.com/kriseniprak/NutDesk/actions/workflows/build.yml/badge.svg"></a>
+  <a href="https://github.com/AwardTech/NutDesk/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/AwardTech/NutDesk"></a>
+  <a href="https://github.com/AwardTech/NutDesk/actions/workflows/build.yml"><img alt="Build" src="https://github.com/AwardTech/NutDesk/actions/workflows/build.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="Licence: GPL-3.0" src="https://img.shields.io/badge/licence-GPL--3.0-blue"></a>
 </p>
 
@@ -19,7 +19,7 @@
 
 ## What NutDesk is
 
-NutDesk connects to a NUT server (`upsd`) - on a Linux box, a Synology or QNAP NAS, a Raspberry Pi, or anywhere
+NutDesk [AwardTech] is the AwardTech-maintained fork of NutDesk. It connects to a NUT server (`upsd`) - on a Linux box, a Synology or QNAP NAS, a Raspberry Pi, or anywhere
 else NUT runs - and monitors the UPS it manages. It shows the state of the UPS at a glance, tells you through
 Windows notifications and email when something happens, and shuts down, suspends or hibernates the computer when
 the battery gets too low or when the server asks every client to go down.
@@ -32,6 +32,8 @@ the battery gets too low or when the server asks every client to go down.
 - **Automatic shutdown** on battery charge or runtime limits, or on a forced shutdown (FSD) from the server.
 - **Event log window** with severity filters, search and an "important events" view.
 - **Automatic reconnection** when the NUT server restarts or the network drops.
+- **UPS Commands** with battery-test, beeper and power controls, server-reported beeper status, and a list of commands advertised by the connected NUT server.
+- **Unsupported-variable detection** that remembers variables the UPS does not provide and lets you clear the list to rediscover capabilities.
 - **Updates from within the app**: new versions are found on GitHub, checked against their published SHA-256
   and installed in place, with an automatic restart.
 - **Portable**: no installer, no administrator rights; unzip and run.
@@ -59,7 +61,7 @@ Windows notifications need Windows 10 or later.
 ## Installation
 
 1. Download `NutDesk-<version>-portable.zip` from the
-   [Releases](https://github.com/kriseniprak/NutDesk/releases/latest) page.
+   [Releases](https://github.com/AwardTech/NutDesk/releases/latest) page.
 2. Extract it anywhere you like - for example `C:\Tools\NutDesk` or a USB stick.
 3. Run `NutDesk.exe`.
 
@@ -94,7 +96,7 @@ from within NutDesk restarts it with the same switch.
 
 ## Updating
 
-NutDesk looks for new versions on its [Releases](https://github.com/kriseniprak/NutDesk/releases) page by itself: a
+NutDesk looks for new versions on its [Releases](https://github.com/AwardTech/NutDesk/releases) page by itself: a
 minute after it starts, then whenever the interval chosen in **Settings > Update** has passed (weekly unless you
 choose daily or monthly), for as long as it runs. Turn off **Check for updates automatically** there to stop it;
 with the branch set to **Development**, pre-releases are offered too. **Verify Update**, in the application menu
@@ -121,7 +123,7 @@ downloaded and verified new version in Explorer instead, for you to finish by ha
 ### Updating by hand
 
 1. Download `NutDesk-<version>-portable.zip` from the
-   [Releases](https://github.com/kriseniprak/NutDesk/releases/latest) page.
+   [Releases](https://github.com/AwardTech/NutDesk/releases/latest) page.
 2. Exit NutDesk: **Exit** in the application menu or in the tray icon's menu.
 3. Copy the contents of the `NutDesk-<version>` folder in the ZIP over your NutDesk folder, replacing the files.
 

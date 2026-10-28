@@ -124,6 +124,12 @@ namespace NutDesk
 
         public MainForm()
         {
+            UPS_Device.ReadUnsupportedVariablesSetting = () => Properties.Settings.Default.NUT_UnsupportedVariables;
+            UPS_Device.WriteUnsupportedVariablesSetting = value =>
+            {
+                Properties.Settings.Default.NUT_UnsupportedVariables = value ?? string.Empty;
+                Properties.Settings.Default.Save();
+            };
             InitializeComponent();
             WireEvents();
         }
@@ -309,6 +315,7 @@ namespace NutDesk
         private readonly Dictionary<Theme.Preference, ToolStripMenuItem> ThemeMenuItems = new Dictionary<Theme.Preference, ToolStripMenuItem>();
         private ToolStripMenuItem LogMenuItem;
         private Wpf.LogWindow LogView;
+        private Wpf.UPSCommandsWindow UPSCommandsView;
 
         /// <summary>
         /// Applies the modern palette, typeface and chrome on top of the designer layout. Done in code rather than
@@ -323,6 +330,7 @@ namespace NutDesk
 
             // Built before the dashboard so the menu is complete the first time it is mirrored.
             BuildLogMenu();
+            BuildUPSCommandsMenu();
             BuildThemeMenu();
 
             EnsureDashboard();
@@ -334,6 +342,7 @@ namespace NutDesk
 
             // The log and update windows are separate top-level windows, so nothing else would repaint them.
             LogView?.ApplyPalette(Theme.IsDark);
+            UPSCommandsView?.ApplyPalette(Theme.IsDark);
             UpdateView?.ApplyPalette(Theme.IsDark);
 
             CopyCaptionsToDashboard();
@@ -426,6 +435,57 @@ namespace NutDesk
             else
             {
                 Main_Menu.Items.Add(LogMenuItem);
+            }
+        }
+
+        /// <summary>Adds the UPS command browser to the mirrored application menu.</summary>
+        private void BuildUPSCommandsMenu()
+        {
+            const string itemName = "UPS Commands";
+            if (Main_Menu.Items.OfType<ToolStripMenuItem>().Any(item => item.Text == itemName))
+            {
+                return;
+            }
+
+            var item = new ToolStripMenuItem(itemName);
+            item.Click += (sender, e) => ShowUPSCommandsWindow();
+
+            var logIndex = Main_Menu.Items.IndexOf(LogMenuItem);
+            if (logIndex >= 0)
+            {
+                Main_Menu.Items.Insert(logIndex + 1, item);
+            }
+            else
+            {
+                Main_Menu.Items.Add(item);
+            }
+        }
+
+        private void ShowUPSCommandsWindow()
+        {
+            if (UPSCommandsView != null)
+            {
+                if (UPSCommandsView.WindowState == System.Windows.WindowState.Minimized)
+                {
+                    UPSCommandsView.WindowState = System.Windows.WindowState.Normal;
+                }
+
+                UPSCommandsView.Activate();
+                return;
+            }
+
+            try
+            {
+                UPSCommandsView = new Wpf.UPSCommandsWindow(() => UPS_Device, Theme.IsDark);
+                UPSCommandsView.Closed += (s, e) => UPSCommandsView = null;
+                new System.Windows.Interop.WindowInteropHelper(UPSCommandsView).Owner = Handle;
+                UPSCommandsView.Show();
+            }
+            catch (Exception ex)
+            {
+                LogFile.LogTracing("Unable to open the UPS commands window.", LogLvl.LOG_ERROR, this);
+                LogFile.LogException(ex, this);
+                UPSCommandsView = null;
             }
         }
 
@@ -522,6 +582,7 @@ namespace NutDesk
         private Wpf.Dashboard DashboardView;
         private Wpf.DashboardViewModel DashboardModel;
         private Wpf.AppMenuViewModel AppMenuModel;
+        private const string AwardTechDisplayName = "NutDesk [AwardTech]";
 
         /// <summary>
         /// Replace the designer's control grid with the WPF dashboard, once.
@@ -545,10 +606,11 @@ namespace NutDesk
 
             DashboardModel = new Wpf.DashboardViewModel
             {
-                AppTitle = AppGlobals.ProgramName,
+                AppTitle = AwardTechDisplayName,
                 ConnectCommand = new Wpf.RelayCommand(OnDashboardConnect),
                 DisconnectCommand = new Wpf.RelayCommand(OnDashboardDisconnect),
                 SettingsCommand = new Wpf.RelayCommand(OnDashboardSettings),
+                UPSCommandsCommand = new Wpf.RelayCommand(ShowUPSCommandsWindow),
                 AppMenu = AppMenuModel
             };
 
@@ -1001,12 +1063,12 @@ namespace NutDesk
                 }
                 else
                 {
-                    Text = ProgramName;
+                    Text = AwardTechDisplayName;
                 }
             }
             else if (form.WindowState == FormWindowState.Maximized || form.WindowState == FormWindowState.Normal)
             {
-                Text = ProgramName;
+                Text = AwardTechDisplayName;
             }
         }
 
@@ -1566,7 +1628,7 @@ namespace NutDesk
         {
             string ShowVersion = ShortProgramVersion;
             string NotifyStr = ProgramName + " - " + ShowVersion + Environment.NewLine;
-            string FormText = ProgramName;
+            string FormText = AwardTechDisplayName;
             switch (Reason)
             {
                 // VB's Select Case on a String matches "" against Case Nothing as well, so both are listed here.
@@ -1655,7 +1717,7 @@ namespace NutDesk
             }
             else
             {
-                Text = ProgramName;
+                Text = AwardTechDisplayName;
             }
             this.FormText = FormText;
 
